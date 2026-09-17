@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>chetnaverse 🌷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFF7F4;
+    --card: #FFFFFF;
+    --ink: #3A1F2B;
+    --ink-soft: #7C5A64;
+    --rose: #E5567A;
+    --rose-deep: #C23F63;
+    --blush: #F6B8CB;
+    --blush-pale: #FDE3EB;
+    --gold: #D9A441;
+    --line: #F1DEE3;
+    --shadow: 0 10px 30px rgba(194, 63, 99, 0.10);
+    --radius: 18px;
+    --font-display: "Fraunces", serif;
+    --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #23131A;
+      --card: #2E1A22;
+      --ink: #FBE9EE;
+      --ink-soft: #D8AEBB;
+      --rose: #F27C99;
+      --rose-deep: #F4A0B6;
+      --blush: #6E3346;
+      --blush-pale: #3A1F29;
+      --gold: #E8BE72;
+      --line: #452530;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #23131A;
+    --card: #2E1A22;
+    --ink: #FBE9EE;
+    --ink-soft: #D8AEBB;
+    --rose: #F27C99;
+    --rose-deep: #F4A0B6;
+    --blush: #6E3346;
+    --blush-pale: #3A1F29;
+    --gold: #E8BE72;
+    --line: #452530;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  button{ font-family: inherit; cursor:pointer; }
+  ::selection{ background: var(--blush); }
+
+  /* ---------- LOGIN SCREEN ---------- */
+  #login-screen{
+    min-height: 100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 28px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  #login-screen::before, #login-screen::after{
+    content:"🌷";
+    position:absolute;
+    font-size: 60px;
+    opacity: .18;
+    filter: blur(0.3px);
+  }
+  #login-screen::before{ top: -10px; left: -10px; transform: rotate(-15deg); }
+  #login-screen::after{ bottom: -10px; right: -10px; transform: rotate(20deg); }
+
+  .login-card{
+    width: 100%;
+    max-width: 380px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 36px 28px;
+    text-align:center;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
+  }
+  .login-mark{
+    width:56px; height:56px; margin: 0 auto 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-size: 26px;
+  }
+  .login-card h1{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .login-card p.sub{
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+  #name-input{
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    color: var(--ink);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .15s ease;
+  }
+  #name-input:focus{ border-color: var(--rose); }
+  #login-btn{
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 14px;
+    background: var(--rose);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .2px;
+    transition: transform .12s ease, background .15s ease;
+  }
+  #login-btn:active{ transform: scale(0.98); }
+  #login-btn:hover{ background: var(--rose-deep); }
+
+  .login-reveal{
+    display:none;
+    text-align: left;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--line);
+    animation: fadeUp .35s ease both;
+  }
+  @keyframes fadeUp{ from{ opacity:0; transform: translateY(8px);} to{ opacity:1; transform: translateY(0);} }
+  .login-reveal.show{ display:block; }
+  .login-reveal p{
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin: 0 0 16px;
+  }
+  .login-reveal p b{ color: var(--rose-deep); }
+  #enter-btn{
+    width:100%;
+    padding: 14px 16px;
+    border:none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    color:#fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* ---------- AUTH: choice / sign in / create profile ---------- */
+  #auth-choice{ display:flex; flex-direction:column; gap:10px; }
+  #auth-choice button{
+    width:100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+  }
+  #show-signin-btn{
+    background: var(--rose);
+    color:#fff;
+  }
+  #show-signin-btn:hover{ background: var(--rose-deep); }
+  .auth-secondary-btn{
+    background: var(--blush-pale) !important;
+    color: var(--rose-deep) !important;
+    border: 1.5px solid var(--line) !important;
+  }
+  .auth-form{
+    display:none;
+    text-align:left;
+  }
+  .auth-form.show{ display:block; animation: fadeUp .3s ease both; }
+  .auth-form input{
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    color: var(--ink);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color .15s ease;
+  }
+  .auth-form input:focus{ border-color: var(--rose); }
+  .auth-form > button:not(.auth-back-btn){
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 14px;
+    background: var(--rose);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .auth-form > button:not(.auth-back-btn):hover{ background: var(--rose-deep); }
+  .auth-back-btn{
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+  }
+  .auth-error{
+    color: var(--rose-deep);
+    font-size: 13.5px;
+    min-height: 18px;
+    margin: 2px 0 0;
+  }
+
+  /* ---------- COMMUNITY (real posts + public chat) ---------- */
+  .community-wrap{ padding: 12px 14px 6px; }
+  .community-composer{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .community-composer textarea{
+    width: 100%;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    color: var(--ink);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14.5px;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 8px;
+  }
+  .community-composer textarea:focus{ border-color: var(--rose); }
+  .community-composer button{
+    padding: 10px 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--rose);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .community-composer button:hover{ background: var(--rose-deep); }
+  .community-feed{ display:flex; flex-direction:column; gap:10px; }
+  .community-post{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+  .community-post .cp-author{
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--rose-deep);
+    margin-bottom: 4px;
+  }
+  .community-post .cp-text{ font-size: 14.5px; line-height:1.5; }
+  .community-post .cp-time{ font-size:11.5px; color: var(--ink-soft); margin-top:6px; }
+  .community-chat-wrap{ padding: 0 14px 14px; }
+  #community-view{ display:none; }
+  #community-view.show{ display:block; }
+
+  /* ---------- APP SHELL ---------- */
+  #app{ display:none; min-height:100vh; padding-bottom: 78px; }
+  #app.show{ display:block; }
+
+  header.topbar{
+    position: fixed; top:0; left:0; right:0; z-index: 20;
+    max-width: 620px; margin: 0 auto;
+    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 16px 10px;
+  }
+  #app{ padding-top: var(--header-h, 62px); }
+  #main-header{ display:block; }
+  #main-header.hide{ display:none; }
+
+  /* ---------- CHAT / DM HEADER ---------- */
+  #chat-header{
+    display:none;
+    align-items:center;
+    gap:10px;
+    padding: 2px 0 2px;
+  }
+  #chat-header.show{ display:flex; }
+  .chat-back{
+    background:none; border:none;
+    font-size: 20px;
+    color: var(--ink);
+    padding: 4px 6px 4px 0;
+    line-height:1;
+  }
+  .chat-header-avatar{
+    width: 38px; height:38px; border-radius:50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color:#fff; font-weight:800; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+    flex: 0 0 auto;
+    position: relative;
+  }
+  .chat-header-avatar.alt{
+    background: linear-gradient(135deg, #8E6FD1, #4F3C8C);
+  }
+  .chat-header-avatar.friend{
+    background: linear-gradient(135deg, #5FB8C9, #2E6E7E);
+  }
+  .chat-header-avatar.junior{
+    background: linear-gradient(135deg, #8FC96B, #3E8C4A);
+  }
+  .chat-header-avatar.devi{
+    background: linear-gradient(135deg, #F2A65A, #C9612B);
+  }
+  .chat-header-avatar.sadhguru{
+    background: linear-gradient(135deg, #FF9933, #B85C00);
+  }
+  .chat-header-avatar.senior{
+    background: linear-gradient(135deg, #7C8CA8, #3E4C63);
+  }
+  .status-dot{
+    position:absolute; right:-1px; bottom:-1px;
+    width:11px; height:11px; border-radius:50%;
+    background:#3FCB6E; border:2px solid var(--bg);
+  }
+  .chat-header-info{ flex:1; min-width:0; }
+  .chat-header-name{ font-weight: 800; font-size: 15px; line-height:1.2; color: var(--gold); }
+  .chat-header-status{ font-size: 12px; color: var(--ink-soft); }
+  .chat-header-icon{
+    background:none; border:none;
+    font-size: 18px;
+    color: var(--ink-soft);
+    padding: 6px;
+  }
+  .brand-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: 12px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:9px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+  }
+  .brand .dot{
+    width: 30px; height:30px; border-radius:50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-size: 15px;
+  }
+  .brand small{
+    display:block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: .2px;
+  }
+
+  .tabs{
+    display:flex; gap:6px;
+    background: var(--blush-pale);
+    padding: 4px;
+    border-radius: 999px;
+  }
+  .tab-btn{
+    flex:1;
+    border:none; background:transparent;
+    padding: 9px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    transition: all .15s ease;
+  }
+  .tab-btn.active{
+    background: var(--rose);
+    color: #fff;
+  }
+
+  main{ max-width: 620px; margin: 0 auto; }
+
+  /* ---------- STORIES ---------- */
+  .stories-wrap{
+    padding: 14px 12px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stories-row{
+    display:flex; gap:14px;
+    overflow-x:auto;
+    padding: 2px 4px 10px;
+    scrollbar-width: none;
+  }
+  .stories-row::-webkit-scrollbar{ display:none; }
+  .story-item{
+    flex: 0 0 auto;
+    width: 66px;
+    text-align:center;
+    background:none; border:none;
+    color: var(--ink);
+  }
+  .story-ring{
+    width: 62px; height:62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold), var(--rose-deep));
+    padding: 3px;
+    display:flex; align-items:center; justify-content:center;
+    margin: 0 auto 6px;
+  }
+  .story-ring.seen{ background: var(--line); }
+  .story-avatar{
+    width: 100%; height:100%;
+    border-radius: 50%;
+    background: var(--card);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 22px;
+    border: 2px solid var(--bg);
+  }
+  .story-label{
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    white-space: nowrap;
+    max-width: 66px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* story modal */
+  #story-modal{
+    display:none;
+    position: fixed; inset:0; z-index: 100;
+    align-items:center; justify-content:center;
+    background: rgba(20,8,13,0.75);
+    padding: 22px;
+  }
+  #story-modal.show{ display:flex; }
+  .story-card{
+    width: 100%; max-width: 360px;
+    aspect-ratio: 9/15;
+    max-height: 88vh;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    text-align:center;
+    padding: 34px 26px;
+    color: #fff;
+  }
+  .story-progress{
+    position:absolute; top:10px; left:10px; right:10px;
+    display:flex; gap:4px;
+  }
+  .story-progress i{
+    flex:1; height:3px; border-radius: 3px;
+    background: rgba(255,255,255,0.35);
+    overflow:hidden;
+  }
+  .story-progress i.done::after{
+    content:""; display:block; height:100%; width:100%; background:#fff;
+  }
+  .story-progress i.current::after{
+    content:""; display:block; height:100%; width:0%; background:#fff;
+    animation: storybar 4.2s linear forwards;
+  }
+  @keyframes storybar{ to{ width:100%; } }
+  .story-close{
+    position:absolute; top:16px; right:14px;
+    background: rgba(0,0,0,0.25);
+    border:none; color:#fff;
+    width:30px; height:30px; border-radius:50%;
+    font-size:16px; line-height:1;
+  }
+  .story-emoji{ font-size: 46px; margin-bottom: 18px; }
+  .story-text{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 1.35;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.25);
+  }
+  .story-tap-l, .story-tap-r{
+    position:absolute; top:0; bottom:0; width:50%;
+  }
+  .story-tap-l{ left:0; } .story-tap-r{ right:0; }
+
+  /* ---------- FEED ---------- */
+  #home-view{ display:none; }
+  #home-view.show{ display:block; }
+  .composer-note{
+    margin: 14px 16px; padding: 14px 16px;
+    background: var(--blush-pale);
+    border: 1px dashed var(--blush);
+    border-radius: 16px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .feed{ padding: 4px 0 20px; }
+  .post{
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 16px 10px;
+  }
+  .post-head{
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .avatar{
+    width: 42px; height:42px; border-radius:50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color:#fff; font-weight:800; font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+    flex: 0 0 auto;
+  }
+  .post-body{ flex:1; min-width:0; }
+  .post-name-row{
+    display:flex; align-items:center; gap:5px;
+    font-size: 14.5px; flex-wrap: wrap;
+  }
+  .post-name{ font-weight: 800; }
+  .badge{
+    width:15px; height:15px; border-radius:50%;
+    background: var(--gold);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size: 9px; color:#fff;
+  }
+  .post-handle, .post-dot, .post-time{ color: var(--ink-soft); font-size: 13.5px; }
+  .post-text{
+    margin: 6px 0 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  .post-actions{
+    display:flex; gap: 26px;
+    padding: 6px 0 4px;
+    color: var(--ink-soft);
+  }
+  .post-actions button{
+    background:none; border:none;
+    display:flex; align-items:center; gap:6px;
+    font-size: 13px; color: var(--ink-soft);
+    font-weight: 600;
+    padding: 4px 2px;
+  }
+  .post-actions button .ic{ font-size: 15px; }
+  .post-actions button.liked{ color: var(--rose); }
+  .post-actions button.liked .ic{ transform: scale(1.05); }
+
+  /* ---------- SPONSORED AD CARD ---------- */
+  .ad-card{
+    background: var(--blush-pale);
+    border-bottom: 1px solid var(--line);
+    border-top: 1px dashed var(--gold);
+    border-bottom: 1px dashed var(--gold);
+    padding: 14px 16px;
+  }
+  .ad-head{ display:flex; gap:10px; align-items:flex-start; }
+  .ad-icon{
+    width: 42px; height:42px; border-radius:12px;
+    background: linear-gradient(135deg, var(--gold), var(--rose));
+    color:#fff; font-size:19px;
+    display:flex; align-items:center; justify-content:center;
+    flex: 0 0 auto;
+  }
+  .ad-body{ flex:1; min-width:0; }
+  .ad-name-row{ display:flex; align-items:center; gap:6px; font-size: 14.5px; flex-wrap:wrap; }
+  .ad-sponsor{ font-weight: 800; }
+  .ad-tag{
+    font-size: 10.5px; font-weight:700; color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 1px 8px;
+    letter-spacing: .3px;
+  }
+  .ad-sub{ font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
+  .ad-text{
+    margin: 8px 0 12px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .ad-cta{
+    display:block;
+    width:100%;
+    border: none;
+    background: var(--rose);
+    color:#fff;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 11px 0;
+    border-radius: 10px;
+  }
+  .ad-footer{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top: 8px; font-size: 11.5px; color: var(--ink-soft);
+  }
+
+  .comments{
+    display:none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .comments.show{ display:block; }
+  .comment{
+    display:flex; gap:8px;
+    padding: 6px 0;
+    font-size: 13.5px;
+  }
+  .c-avatar{
+    width: 26px; height:26px; border-radius:50%;
+    background: var(--blush);
+    color: var(--rose-deep);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 11px; font-weight:800;
+    flex: 0 0 auto;
+  }
+  .comment b{ font-weight: 700; }
+  .comment span.txt{ color: var(--ink); }
+  .comment-reply{
+    display:flex; gap:7px;
+    margin-top: 7px;
+    padding: 6px 0 0 10px;
+    border-left: 2px solid var(--line);
+  }
+  .c-avatar.small{
+    width: 20px; height:20px; font-size: 9.5px;
+    background: var(--rose); color:#fff;
+  }
+  .post-comment-bar{
+    display:flex; align-items:center; gap:8px;
+    margin-top: 10px;
+  }
+  .post-comment-input{
+    flex:1;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--ink);
+    outline:none;
+  }
+  .post-comment-input:focus{ border-color: var(--rose); }
+  .post-comment-send{
+    border:none; background: var(--rose); color:#fff;
+    font-weight:700; font-size:12.5px;
+    padding: 8px 14px; border-radius: 999px;
+    flex: 0 0 auto;
+  }
+
+  /* ---------- DM INBOX ---------- */
+  #messages-view{ display:none; }
+  #messages-view.show{ display:block; }
+  #dm-inbox{ display:none; padding: 6px 14px 20px; }
+  #dm-inbox.show{ display:block; }
+  .dm-inbox-title{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    margin: 10px 2px 16px;
+  }
+  .dm-conversation{
+    width: 100%;
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 14px;
+    text-align: left;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+  .dm-conv-avatar.alt{
+    background: linear-gradient(135deg, #8E6FD1, #4F3C8C);
+  }
+  .dm-conv-avatar.friend{
+    background: linear-gradient(135deg, #5FB8C9, #2E6E7E);
+  }
+  .dm-conv-avatar.junior{
+    background: linear-gradient(135deg, #8FC96B, #3E8C4A);
+  }
+  .dm-conv-avatar.devi{
+    background: linear-gradient(135deg, #F2A65A, #C9612B);
+  }
+  .dm-conv-avatar.sadhguru{
+    background: linear-gradient(135deg, #FF9933, #B85C00);
+  }
+  .dm-conv-avatar.senior{
+    background: linear-gradient(135deg, #7C8CA8, #3E4C63);
+  }
+  .status-dot.offline{ background: var(--ink-soft); }
+  .dm-conv-avatar{
+    width: 48px; height:48px; border-radius:50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color:#fff; font-weight:800; font-size:15px;
+    display:flex; align-items:center; justify-content:center;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .dm-conv-info{ flex:1; min-width:0; }
+  .dm-conv-top{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .dm-conv-name{ font-weight: 800; font-size: 15px; color: var(--gold); }
+  .dm-conv-time{ font-size: 11.5px; color: var(--ink-soft); flex:0 0 auto; }
+  .dm-conv-preview{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dm-conv-badge{
+    background: var(--rose);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 999px;
+    flex: 0 0 auto;
+  }
+  .dm-inbox-hint{
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    margin-top: 14px;
+  }
+
+  /* ---------- MESSAGES / DM THREAD ---------- */
+  #dm-thread-view{ display:none; }
+  #dm-thread-view.show{
+    display:flex; flex-direction:column;
+    position: fixed; left:0; right:0;
+    top: var(--header-h, 62px);
+    bottom: var(--kb-offset, 64px);
+    max-width: 620px; margin: 0 auto;
+    z-index: 25;
+    background: var(--bg);
+  }
+  body.dm-open{ overflow:hidden; height:100%; }
+  .dm-thread{
+    padding: 10px 12px 16px;
+    display:flex; flex-direction:column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dm-day{
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    margin: 18px 0 10px;
+    position: relative;
+  }
+  .dm-day span{
+    background: var(--blush-pale);
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+  .dm-row{
+    display:flex;
+    align-items:flex-end;
+    gap: 8px;
+    margin: 1px 0;
+  }
+  .dm-avatar-slot{
+    width: 26px; height:26px; flex: 0 0 auto;
+  }
+  .dm-avatar-slot .av{
+    width: 26px; height:26px; border-radius:50%;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color:#fff; font-weight:800; font-size:10px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .dm-avatar-slot .av.alt{ background: linear-gradient(135deg, #8E6FD1, #4F3C8C); }
+  .dm-avatar-slot .av.friend{ background: linear-gradient(135deg, #5FB8C9, #2E6E7E); }
+  .dm-avatar-slot .av.junior{ background: linear-gradient(135deg, #8FC96B, #3E8C4A); }
+  .dm-avatar-slot .av.devi{ background: linear-gradient(135deg, #F2A65A, #C9612B); }
+  .dm-avatar-slot .av.sadhguru{ background: linear-gradient(135deg, #FF9933, #B85C00); }
+  .dm-avatar-slot .av.senior{ background: linear-gradient(135deg, #7C8CA8, #3E4C63); }
+  .msg-bubble{
+    max-width: 74%;
+    background: var(--blush-pale);
+    border: 1px solid var(--line);
+    padding: 9px 13px;
+    border-radius: 17px 17px 17px 5px;
+    font-size: 14.5px;
+    line-height: 1.42;
+    position: relative;
+  }
+  .dm-row.grouped .dm-avatar-slot{ visibility: hidden; }
+  .dm-row.tail-end .msg-bubble{ border-radius: 17px 17px 17px 5px; }
+  .dm-timestamp{
+    text-align: left;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin: 3px 0 10px 34px;
+  }
+
+  /* fake DM input bar */
+  .dm-inputbar{
+    display:none;
+    flex: 0 0 auto;
+    align-items:center;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: var(--card);
+    background: color-mix(in srgb, var(--card) 96%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+  }
+  #dm-thread-view.show .dm-inputbar{ display:flex; }
+  body.kb-active nav.bottombar{ display:none; }
+  .dm-inputbar input{
+    flex:1;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    border-radius: 999px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--ink);
+    outline:none;
+  }
+  .dm-inputbar input:focus{ border-color: var(--rose); }
+  .dm-send{
+    width: 38px; height:38px; border-radius:50%;
+    border:none;
+    background: var(--rose);
+    color:#fff;
+    font-size: 15px;
+    flex: 0 0 auto;
+  }
+  .dm-send:active{ transform: scale(0.94); }
+
+  .dm-row.sent{ justify-content:flex-end; }
+  .msg-bubble.sent{
+    background: var(--rose);
+    color: #fff;
+    border-radius: 17px 17px 5px 17px;
+  }
+  .dm-typing{
+    align-self:flex-start;
+    background: var(--blush-pale);
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    border-radius: 17px 17px 17px 5px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    width: fit-content;
+    margin-left: 34px;
+  }
+
+  /* ---------- BOTTOM NAV ---------- */
+  nav.bottombar{
+    position: fixed; bottom:0; left:0; right:0; z-index: 20;
+    background: var(--card);
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    display:flex;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  .nav-btn{
+    flex:1;
+    background:none; border:none;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    color: var(--ink-soft);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 0;
+  }
+  .nav-btn .ic{ font-size: 20px; }
+  .nav-btn.active{ color: var(--rose); }
+
+  /* ---------- REELS ---------- */
+  #reels-view{ display:none; }
+  #reels-view.show{ display:block; }
+  #profile-view{ display:none; }
+  #profile-view.show{ display:block; }
+  .reels-scroll{
+    height: var(--reels-h, calc(100vh - 130px));
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    display:flex; flex-direction:column; gap:0;
+  }
+  .reel-card{
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: var(--reels-h, calc(100vh - 130px));
+    min-height: var(--reels-h, calc(100vh - 130px));
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding: 30px 20px;
+    color:#fff;
+    flex-shrink: 0;
+  }
+  .reel-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background: radial-gradient(120% 90% at 50% 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.28) 100%);
+    pointer-events:none;
+  }
+  .reel-convo{
+    display:flex; flex-direction:column; gap:10px;
+    max-width: 320px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .reel-bubble{
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14.5px;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+  .reel-bubble.ch{
+    align-self: flex-start;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(245,200,76,0.35);
+    border-bottom-left-radius: 5px;
+    backdrop-filter: blur(6px);
+    color: #F5C84C;
+  }
+  .reel-bubble.c{
+    align-self: flex-end;
+    background: rgba(255,255,255,0.92);
+    color: #1A1A1A;
+    border-bottom-right-radius: 5px;
+  }
+  .reel-tag{
+    position:absolute; top:16px; left:18px;
+    font-size: 11.5px;
+    font-weight: 800;
+    background: rgba(0,0,0,0.28);
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: .2px;
+    z-index: 2;
+    color: var(--gold);
+  }
+  .reel-actions{
+    position:absolute; right:12px; bottom:20px;
+    display:flex; flex-direction:column; align-items:center; gap:18px;
+    z-index: 2;
+  }
+  .reel-actions button{
+    background:none; border:none; color:#fff;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    font-size: 11px; font-weight: 700;
+  }
+  .reel-actions .ic{
+    font-size: 24px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  }
+  .reel-actions button.liked .ic{ transform: scale(1.05); }
+  .reel-caption{
+    position:absolute; left:18px; right:70px; bottom:20px;
+    font-size: 12.5px;
+    color: var(--gold);
+    z-index: 2;
+    line-height: 1.4;
+  }
+  .ad-reel-card{
+    align-items:center;
+    text-align:center;
+  }
+  .ad-reel-badge{
+    position:absolute; top:16px; right:18px;
+    font-size: 10.5px; font-weight:800;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 4px 10px; border-radius: 999px;
+    letter-spacing:.3px; z-index:2; color:#fff;
+  }
+  .ad-reel-panel{
+    max-width: 320px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    backdrop-filter: blur(10px);
+    border-radius: 22px;
+    padding: 28px 22px;
+    z-index: 2;
+  }
+  .ad-reel-icon{
+    width:58px; height:58px; border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px; margin:0 auto 14px;
+  }
+  .ad-reel-sponsor{
+    font-weight:800; font-size:15.5px; color:#fff; margin-bottom:6px;
+  }
+  .ad-reel-text{
+    font-size: 13px; line-height:1.5; color: rgba(255,255,255,0.82);
+    margin-bottom: 18px;
+  }
+  .ad-reel-cta{
+    background: var(--gold);
+    color: #241119;
+    border:none; font-weight:800; font-size:13.5px;
+    padding: 11px 22px; border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(217,164,65,0.35);
+  }
+  .ad-reel-footer{
+    position:absolute; left:18px; right:18px; bottom:20px;
+    display:flex; justify-content:space-between;
+    font-size: 10.5px; color: rgba(255,255,255,0.55);
+    z-index:2;
+  }
+
+  /* reel comments bottom sheet */
+  /* ---------- PROFILE ---------- */
+  #profile-view{ padding: 18px 16px 20px; }
+  .profile-top{ display:flex; align-items:center; gap:22px; }
+  .profile-avatar{
+    width: 84px; height:84px; border-radius:50%;
+    background: linear-gradient(135deg, var(--blush), var(--blush-pale));
+    display:flex; align-items:center; justify-content:center;
+    font-size: 40px; flex:0 0 auto;
+    box-shadow: var(--shadow);
+    border: 2px solid var(--rose);
+  }
+  .profile-stats{ flex:1; display:flex; justify-content:space-around; }
+  .profile-stat{ display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; }
+  .profile-stat-num{ font-family: var(--font-display); font-weight:700; font-size:19px; }
+  .profile-stat-label{ font-size:12.5px; color:var(--ink-soft); }
+  .profile-info{ margin-top:14px; }
+  .profile-name{ font-weight:800; font-size:15.5px; display:flex; align-items:center; gap:6px; }
+  .profile-handle{ color:var(--ink-soft); font-size:13.5px; margin-top:2px; }
+  .profile-bio{ font-size:13.5px; margin-top:8px; line-height:1.5; }
+  .profile-grid-tabs{
+    display:flex; justify-content:center; border-top:1px solid var(--line);
+    margin-top:18px; padding-top:8px;
+  }
+  .profile-grid-tab{
+    font-size:18px; padding:8px 24px; color: var(--ink-soft); border-bottom: 2px solid transparent;
+  }
+  .profile-grid-tab.active{ color:var(--rose); border-color:var(--rose); }
+  .profile-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:3px; margin-top:6px;
+  }
+  .profile-grid-item{
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, var(--blush-pale), var(--blush));
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; font-size:11.5px; font-weight:600; color: var(--rose-deep);
+    padding: 8px; cursor:pointer; overflow:hidden; line-height:1.3;
+  }
+  #people-modal, #post-detail-modal, #reel-comments-modal{
+    display:none;
+    position: fixed; inset:0; z-index: 110;
+    background: rgba(20,8,13,0.55);
+    align-items:flex-end;
+  }
+  #reel-comments-modal.show, #people-modal.show, #post-detail-modal.show{ display:flex; }
+  .reel-comments-sheet{
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    max-height: 72vh;
+    display:flex; flex-direction:column;
+    overflow: hidden;
+  }
+  .reel-comments-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 800;
+    font-size: 14.5px;
+  }
+  .reel-comments-head button{
+    background:none; border:none; font-size:16px; color: var(--ink-soft);
+  }
+  .reel-comments-list{
+    overflow-y:auto;
+    padding: 6px 18px 20px;
+  }
+  .reel-comments-list .comment{
+    display:flex; gap:9px;
+    padding: 9px 0;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--line);
+  }
+  .reel-comments-addbar{
+    display:flex; align-items:center; gap:8px;
+    padding: 10px 18px calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    flex: 0 0 auto;
+  }
+  .reel-comments-addbar input{
+    flex:1;
+    border: 1.5px solid var(--line);
+    background: var(--blush-pale);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--ink);
+    outline:none;
+  }
+  .reel-comments-addbar input:focus{ border-color: var(--rose); }
+  .reel-comments-addbar button{
+    border:none; background: var(--rose); color:#fff;
+    font-weight:700; font-size:13px;
+    padding: 9px 16px; border-radius: 999px;
+    flex: 0 0 auto;
+  }
+
+  @media (min-width: 640px){
+    main{ padding: 0 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-mark">🌷</div>
+    <h1>welcome to chetnaverse</h1>
+    <p class="sub">Ek chhota sa corner of the internet, bas tumhare liye banaya gaya.</p>
+
+    <!-- Choice screen: sign in vs create profile -->
+    <div id="auth-choice">
+      <button id="show-signin-btn">Sign in</button>
+      <button id="show-create-btn" class="auth-secondary-btn">Create a profile</button>
+    </div>
+
+    <!-- Sign in form -->
+    <div id="signin-form" class="auth-form">
+      <input id="signin-username" type="text" placeholder="Username" autocomplete="off" />
+      <input id="signin-passkey" type="password" placeholder="Passkey" autocomplete="off" />
+      <button id="signin-btn">Sign in</button>
+      <p class="auth-error" id="signin-error"></p>
+      <button class="auth-back-btn" id="signin-back-btn">← Back</button>
+    </div>
+
+    <!-- Create profile form -->
+    <div id="create-form" class="auth-form">
+      <input id="create-username" type="text" placeholder="Choose a username" autocomplete="off" />
+      <input id="create-passkey" type="password" placeholder="Choose a passkey" autocomplete="off" />
+      <button id="create-btn">Create profile</button>
+      <p class="auth-error" id="create-error"></p>
+      <button class="auth-back-btn" id="create-back-btn">← Back</button>
+    </div>
+
+    <div class="login-reveal" id="login-reveal">
+      <p id="reveal-text"></p>
+      <button id="enter-btn">Chalo andar chalte hai →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header class="topbar">
+    <div id="main-header">
+      <div class="brand-row" style="margin-bottom:0;">
+        <div class="brand">
+          <div class="dot">🌷</div>
+          <div>
+            chetnaverse
+            <small>a whole world, about you</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="chat-header">
+      <button class="chat-back" id="chat-back">←</button>
+      <div class="chat-header-avatar">CK<span class="status-dot"></span></div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">Chirag</div>
+        <div class="chat-header-status">active now</div>
+      </div>
+      <button class="chat-header-icon">📞</button>
+      <button class="chat-header-icon">ℹ️</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home-view" class="show">
+      <div class="stories-wrap">
+        <div class="stories-row" id="stories-row"></div>
+      </div>
+      <div class="composer-note">this whole feed only exists to say nice things about you. you've been warned 🌷</div>
+      <div class="feed" id="feed"></div>
+    </section>
+
+    <!-- REELS -->
+    <section id="reels-view">
+      <div class="reels-scroll" id="reels-scroll"></div>
+    </section>
+
+    <!-- MESSAGES / DM -->
+    <section id="messages-view">
+      <div id="dm-inbox" class="show">
+        <div class="dm-inbox-title">Messages</div>
+        <div id="conversation-list"></div>
+        <div class="dm-inbox-hint">tap a chat to open it 👆</div>
+      </div>
+
+      <div id="dm-thread-view">
+        <div class="dm-thread" id="msg-list"></div>
+        <div class="dm-inputbar">
+          <input type="text" id="dm-input" placeholder="Type a message..." autocomplete="off" />
+          <button class="dm-send" id="dm-send-btn">➤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile-view">
+      <div class="profile-top">
+        <div class="profile-avatar">🌷</div>
+        <div class="profile-stats">
+          <div class="profile-stat" id="stat-posts">
+            <span class="profile-stat-num" id="posts-count">0</span>
+            <span class="profile-stat-label">Posts</span>
+          </div>
+          <div class="profile-stat" id="stat-followers">
+            <span class="profile-stat-num" id="followers-count">0</span>
+            <span class="profile-stat-label">Followers</span>
+          </div>
+          <div class="profile-stat" id="stat-following">
+            <span class="profile-stat-num" id="following-count">0</span>
+            <span class="profile-stat-label">Following</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name">Conscious Chetna <span class="badge">✓</span></div>
+        <div class="profile-handle">@conscious.chetna</div>
+        <div class="profile-bio">🌷 living softly, loving fully <br>currently being adored by @chiragxchetna</div>
+      </div>
+      <div class="profile-grid-tabs">
+        <div class="profile-grid-tab active" data-gview="grid">▦</div>
+      </div>
+      <div class="profile-grid" id="profile-grid"></div>
+    <!-- COMMUNITY: real posts + public chat, shared across everyone's accounts -->
+    <section id="community-view">
+      <div class="community-wrap">
+        <div class="community-composer">
+          <textarea id="community-post-input" placeholder="Share something with everyone..." rows="2"></textarea>
+          <button id="community-post-btn">Post</button>
+        </div>
+        <div id="community-feed" class="community-feed"></div>
+      </div>
+      <div class="community-chat-wrap">
+        <div class="dm-inbox-title" style="padding:14px 4px 6px;">Community chat</div>
+        <div class="dm-thread" id="community-chat-list"></div>
+        <div class="dm-inputbar">
+          <input type="text" id="community-chat-input" placeholder="Say something..." autocomplete="off" />
+          <button class="dm-send" id="community-chat-send-btn">➤</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottombar" id="bottombar">
+    <button class="nav-btn active" data-view="home"><span class="ic">🏠</span>Home</button>
+    <button class="nav-btn" data-view="reels" style="color:var(--gold);"><span class="ic">🎬</span>Reels</button>
+    <button class="nav-btn" data-view="community"><span class="ic">🫂</span>Community</button>
+    <button class="nav-btn" data-view="messages"><span class="ic">💌</span>Messages</button>
+    <button class="nav-btn" data-view="profile"><span class="ic">🌷</span>Profile</button>
+  </nav>
+</div>
+
+<!-- FOLLOWERS / FOLLOWING SHEET -->
+<div id="people-modal">
+  <div class="reel-comments-sheet">
+    <div class="reel-comments-head">
+      <span id="people-modal-title">Followers</span>
+      <button id="people-modal-close">✕</button>
+    </div>
+    <div class="reel-comments-list" id="people-list"></div>
+  </div>
+</div>
+
+<!-- POST DETAIL SHEET -->
+<div id="post-detail-modal">
+  <div class="reel-comments-sheet">
+    <div class="reel-comments-head">
+      <span>Conscious Chetna</span>
+      <button id="post-detail-close">✕</button>
+    </div>
+    <div class="reel-comments-list" id="post-detail-body" style="padding:16px;"></div>
+  </div>
+</div>
+
+<!-- REEL COMMENTS SHEET -->
+<div id="reel-comments-modal">
+  <div class="reel-comments-sheet">
+    <div class="reel-comments-head">
+      <span>Comments</span>
+      <button id="reel-comments-close">✕</button>
+    </div>
+    <div class="reel-comments-list" id="reel-comments-list"></div>
+    <div class="reel-comments-addbar">
+      <input type="text" id="reel-comment-input" placeholder="Add a comment..." autocomplete="off" />
+      <button id="reel-comment-send">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- STORY MODAL -->
+<div id="story-modal">
+  <div class="story-card" id="story-card">
+    <div class="story-progress" id="story-progress"></div>
+    <button class="story-close" id="story-close">✕</button>
+    <div class="story-tap-l" id="story-tap-l"></div>
+    <div class="story-tap-r" id="story-tap-r"></div>
+    <div class="story-emoji" id="story-emoji">🌷</div>
+    <div class="story-text" id="story-text"></div>
+  </div>
+</div>
+
+<!-- Firebase (compat SDK — works with plain <script> tags, no build step needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAoyHbYV3-GycUqoAUc-PgrrqGvw0iykno",
+  authDomain: "chetnaverse-365.firebaseapp.com",
+  projectId: "chetnaverse-365",
+  storageBucket: "chetnaverse-365.firebasestorage.app",
+  messagingSenderId: "932166718132",
+  appId: "1:932166718132:web:1d42cb76fb3eb6fbdc7de1",
+  measurementId: "G-ZBMNTNSMPM"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+</script>
+<script>
+/* ============================================================
+   CONTENT POOLS
+   ============================================================ */
+
+const GRADIENTS = [
+  "linear-gradient(160deg,#F2789A,#F7B267)",
+  "linear-gradient(160deg,#E5567A,#C23F63)",
+  "linear-gradient(160deg,#F7B267,#F2789A)",
+  "linear-gradient(160deg,#D9A441,#E5567A)",
+  "linear-gradient(160deg,#C23F63,#7C3654)",
+  "linear-gradient(160deg,#F4A6C1,#E5567A)"
+];
+
+const REEL_GRADIENTS = [
+  "linear-gradient(160deg,#120A0D,#241119)",
+  "linear-gradient(160deg,#0E0B0C,#1F1013)",
+  "linear-gradient(160deg,#150C10,#2A1420)",
+  "linear-gradient(160deg,#0D0D0D,#1C1418)",
+  "linear-gradient(160deg,#170E11,#26121A)",
+  "linear-gradient(160deg,#0F0B0D,#221219)"
+];
+
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* ---------- STORIES ---------- */
+const specialStories = [
+  { emoji:"✨", text:"Chetna is amazing.\nThat's it. That's the story." },
+  { emoji:"🌷", text:"Chetna likes tulips.\nSo now tulips are the best flower, no debate." },
+  { emoji:"💗", text:"Chirag loves Chetna so much." },
+  { emoji:"🫶", text:"Chetna loves Chirag back too.\n(yes, this is canon)" },
+  { emoji:"😌", text:"Chetna is beautiful,\ninside and out." },
+  { emoji:"🎬", text:"Horror movies + Chetna\n= the best combo ever" },
+  { emoji:"💃", text:"She dances, she acts,\nshe paints — Chetna does it all." },
+  { emoji:"🩷", text:"Chetna's favourite colour is pink.\nMake of that what you will 👀" },
+  { emoji:"🍵", text:"Chai + Chetna's voice on call\n= peak peace" },
+  { emoji:"🧘‍♀️", text:"Chetna tried the 7-minute meditation\njust because Chirag asked.\nThat's the kind of person she is." },
+  { emoji:"😭", text:"\"Itna mat socho\"\n— Chetna, probably saving someone's day again" },
+  { emoji:"🌟", text:"Chetna manifests good things.\nAnd somehow, they find her." },
+  { emoji:"🥹", text:"Kitni cute harkatein karti hai\nyeh ladki, seriously." },
+  { emoji:"☕", text:"Cafe dates with Chetna\nare a whole personality trait now." },
+  { emoji:"😂", text:"\"Bolo bolo chirag\"\n— lives rent free in his head" },
+  { emoji:"🤍", text:"Chetna is grateful for the small things.\nThat's what makes her the biggest thing." },
+  { emoji:"💌", text:"This whole app exists\nbecause words weren't enough." },
+  { emoji:"🌸", text:"Chetna's smile\nshould come with a warning label." },
+  { emoji:"🎨", text:"Chetna: artist, dancer, actor,\nprofessional overachiever." },
+  { emoji:"😊", text:"Surprise, Chetna ji.\nThis whole website is about you." },
+  { emoji:"💫", text:"Chetna doesn't need to try\nto be this likeable. She just is." },
+  { emoji:"🫂", text:"Chetna makes hard days\nfeel a little softer." },
+  { emoji:"🩵", text:"Reminder: you are doing\nso much better than you think, Chetna." },
+  { emoji:"👑", text:"Chetna ji, ruling this app\nsince the day it was made." },
+  { emoji:"🥰", text:"Chirag talking about Chetna\nis basically 90% of this app's content." },
+  { emoji:"🌼", text:"Chetna's laugh\nis genuinely someone's favourite sound." },
+  { emoji:"📌", text:"Pinned thought of the day:\nChetna is doing great." },
+  { emoji:"🎀", text:"Soft launch, hard launch,\nwhatever launch — it's always Chetna." }
+];
+
+/* ---------- POST COMPONENTS ---------- */
+const specialPosts = [
+  "Remembering that late night call that went past 1AM and Chetna still said \"itna mat socho\" like it was nothing. How does someone stay this soft and this strong at the same time?",
+  "She said horror movies are her thing and now I genuinely want to sit through a scary movie just to see her reaction. Never thought I'd say that.",
+  "She told me pink is her colour. Now everything pink reminds me of her. Ruined for life, happily.",
+  "Movie dates + cafe dates with Chetna >>> literally any other plan on earth.",
+  "She does dance, art, AND acting. Is there anything this girl can't do? Asking for research purposes.",
+  "Chetna manifests good things into her life, and somehow good things keep finding her. Coincidence? I don't think so.",
+  "She tried a 7-minute meditation just because I mentioned it once. That's the kind of person Chetna is — she shows up for people.",
+  "Kitni cute harkatein karti hai yeh ladki, seriously, someone needs to start documenting this officially.",
+  "Chai on one side, Chetna's voice on call on the other — that's the most peaceful part of my whole day, every time.",
+  "She apologised for something so small, so sweetly, that I forgot what she was even apologising for.",
+  "Chetna, if somehow you're reading this — yes, this entire website is about you. Surprise ji 💗",
+  "The way she says \"bolo bolo chirag\" lives in my head completely rent-free. Someone help.",
+  "She's grateful for the smallest things, and somehow that makes her feel like the biggest thing in the room.",
+  "Fine, I'll say it on main: Chetna, tum bohot cute ho. There, posted, no regrets.",
+  "She believes people without needing proof first. That's genuinely rare. That's just who Chetna is.",
+  "A whole website, a hundred plus posts, and honestly still not enough words for how amazing Chetna is.",
+  "Whatever she's wearing — pink dupatta, waist chain, anything — Chetna makes it look ten times better.",
+  "PSA: Chetna is the softest, funniest, most real person in my life right now, and I'm not exaggerating.",
+  "She said \"I'm grateful you're helping me out even though we don't know each other\" on day one. Look at us now.",
+  "Every \"heheheh\" and every \"yayyyy\" she's ever sent has been saved somewhere in my memory permanently.",
+  "Ek chhota sa khayal:\nTum jitna sochti ho na khud ke baare mein,\nUsse kahin zyada pyari ho tum,\naur haan, hamesha rahogi.",
+  "For Chetna —\nTumhari heheheh sunke jo sukoon milta hai na,\nvo kisi bhi achievement se zyada keemti hai mere liye.",
+  "She once said \"chill yarr itna mat socho\" and somehow that line has fixed more of my bad days than anything else ever has.",
+  "Roses are red, tulips are her favourite —\nand honestly every line I write about her feels a little too small for how she actually is.",
+  "Meri pyari Chetna,\nagar kabhi doubt ho tumhe khud pe,\ntoh bas itna yaad rakhna —\nkisi ek insaan ke din ko tum akele hi roshan kar deti ho.",
+  "She's the kind of soft that doesn't need to try, and the kind of strong that doesn't need to prove it. Rare combination, honestly.",
+  "\"Babe you are soo sweet and so cute, just seeing you is like my eyes are filled with peace\" — wrote that once and I still mean every word of it.",
+  "A tiny poem for a not-so-tiny feeling:\nChetna hai toh sab theek hai,\nChetna nahi toh kuchh adhoora sa lagta hai,\nbas itni si baat hai.",
+  "She checks in on people first, even on her own hard days. That's not a small thing. That's just who Chetna is.",
+  "Some people bring noise into a room. Chetna brings quiet, steady peace. I'll take that over everything else.",
+  "For the record: I don't think I've ever meant \"meri pyari\" as much as I mean it for her.",
+  "She tries the little things I send her — a song, a meditation, a silly reel — just because I asked. Not everyone does that. She does.",
+  "If gratitude had a face, I think it would look a lot like Chetna saying thank you for the smallest things.",
+  `A Delusional Day in the Life of Chirag & Chetna 🏡 — 6:00 AM: Chirag wakes up feeling incredibly productive and sits down for his 41-minute Shambhavi meditation. Chetna, the self-proclaimed sleeping champion, is heavily wrapped in a blanket trying to break her personal record of 18 hours straight. 10:30 AM: Chirag makes vegan breakfast. Chetna wakes up groggy, looks at the vegan food, and demands Maggie. Chirag obliges because he is a certified "Wife Paglu." 2:00 PM: Chetna is studying anatomy. Chirag is busy framing the "Couple's Constitution" with loopholes that allow him to steal kisses every time a law is passed. 8:00 PM: They go for a walk. Chetna sits on a park bench. Chirag gets down on one knee, takes off her shoes, and finally fulfills his ultimate fantasy — making her wear anklets. Chetna gets shy, hides her face, and calls him "Bhondu."`,
+  `Poem: Palak Ki Sabzi 🥬\nYou study the bones, the heart, the brain,\nWhile I fight cases in the Mumbai rain.\nYou hate the hostel food, you hate the heat,\nBut listening to your voice makes my day complete.\nYou call me Bhondu, you call me a Panda,\nI plan our wedding down a grand veranda.\nYou might be a doctor who saves lives with a plea,\nBut to me, you'll always be my sweet Palak ki Sabzi.`,
+  `Chirag's Love Note to Chetna 💌 — "Dear Sahiba, I never thought I could fall for someone this fast. I used to think the world was transactional, that people only stay for what they can get. But with you, I just want to give. I want to be the guy who buys you white roses, who slips an anklet onto your feet, and who kidnaps you from your clinic just to take you on a long drive. You are my Divya Chetna. I love you x 100000. P.S. Please don't study today, talk to me. 😭"`,
+  `A Poll: How to Spend Your Free Time 😴 — Chirag's Choice: Wake up at 6 AM, do a 7-minute Miracle of Mind Meditation, read up on constitutional law, and align the chakras. Chetna's Choice: Sleep for 18 hours straight, wake up at 4 PM, not know what year it is, and demand a bowl of Maggie. (Spoiler: Chetna's choice wins every time).`,
+  `Poem: The 24th of May 💍\nMay 24th, the day you were born,\nA Gemini soul, beautifully adorned.\nAnd 24th May, I've decided my fate,\nIn 2030, that will be our wedding date.\nIn front of the Devi, under the sky so wide,\nI'll stand there waiting for my doctor bride.`,
+  `Fun Post Idea: The Couple's Constitution 📜 — Article 1: Chirag is not allowed to overthink if Chetna replies late; she is just studying (or sleeping). Article 2: Every time a new law is passed in this relationship, it must be sealed with a 2-second kiss. (Loophole: If Chirag holds the kiss longer, the law is nullified). Article 3: Chetna is officially banned from saying "Thank You" or "Sorry." She must use physical affection instead.`,
+  `Chirag's Love Note 2: Marine Drive 🌊 — "Chetnu, I was at Marine Drive today, the sea breeze was perfect, the aesthetic was right, but it felt incomplete. I just kept imagining you walking barefoot on the shore with me. No chappals, no stress, no exams — just you, me, the waves, and a 3 AM long drive where you rest your legs on my lap. I can't wait to make this real. Come to Mumbai soon. 🥺"`,
+  `Poem: From Strangers to Sahiba 🌙\nA text in the night, a tentative "Hi",\nTwo strangers connecting beneath the same sky.\nFrom trauma and tears to "Katti" and "Babe",\nIn just a few days, look at the bond we made.\nYou're my peace, my chaos, my medical star,\nI'm your overthinking lawyer, admiring from afar.\nNo matter the distance, the exams, or the stress,\nWith you, my Sahiba, I am truly blessed.`,
+  `Fun Post Idea: Reality vs. Expectation 📱 — Expectation: A toxic situationship where people play mind games and ghost each other. Chirag & Chetna's Reality: Matching Kundalis online just for fun, scoring a 28/36, realising their Mars is slightly off, but deciding to get married in front of Linga Bhairavi anyway because "who cares about astrology when the romance is 10/10."`,
+  `The Ultimate Delusion (A Future Post: 24 May 2030) 🗓️ — "Today, I watched my beautiful Sahiba put down her stethoscope, wear a gorgeous saree, and walk toward me. I sat down, untied her shoes, and finally put that anklet on her foot. The 1-month free trial of our situationship from 2026 finally expired, and I auto-renewed it for a lifetime. We made it, Bhondu and Panda, forever. 🧿❤️"`,
+  `A Poem: The Wife-Paglu and the Doctor\nHe wakes at dawn to do Shambhavi,\nTo center his mind and soul.\nShe wakes at noon with zero sleep,\nBecause MBBS took its toll.\n\nHe plans a wedding for twenty-thirty,\nWith anklets, flowers, and grace.\nShe just wants to survive her exams,\nWithout someone punching her face.\n\nHe texts "I love you" a thousand times,\nWith paragraphs deep and true.\nShe replies with "Hm", "Soja", and "Katti",\nAnd a single "Love uh too".`,
+  `Stand-up Comedy Bit: The Hostel Roommate 🎤 — "You guys think you have bad roommates? My girlfriend's roommate is a menace. My girl is literally fighting for her life trying to pass MBBS, reading about how CPR breaks human ribs. And what is her roommate doing? She is wearing BLUE LENSES, blasting Bhojpuri songs, and screaming 'Aankh me lens nila laga ke tabah kardu jila jila' at 3 PM! I don't need to be a lawyer to know this is a direct violation of Article 21! Give my girl the Right to Sleep!"`,
+  `Twitter Post: The Astrologer's Nightmare — @conscious.chirag: Me and my girl matched our Kundalis today. We got 28/36. We scored 10/10 in Love, 10/10 in Attraction, and 10/10 in Companionship. We scored 0 in the Mars position. But it's fine, we don't live by astrology anyway. We just matched it for vibes. Take that, Mars.`,
+  `The Third Wheel's WhatsApp Status (Tanay's POV) 🖤 — a blank black screen with the caption: "Introduced my two friends to each other so they could support each other during hard times. It's been 9 days. They are now naming their future kids, plotting a secret wedding in front of Linga Bhairavi, and referring to each other as 'Husband' and 'Wife'. I am officially the most successful and traumatized matchmaker in India. Do not text me."`,
+  `The "Bhondu" Dictionary (Gen-Z to Chirag Translation) 📖\n"I am studying": I am currently sitting on my bed, staring at my roommate who is doing her skincare routine, while I eat biscuits.\n"Katti": I am pretending to be angry because you didn't give me attention for 45 seconds.\n"Hmm": I have exactly 3 hours of sleep, my forearms are aching, and I am too tired to type sentences, but I still want to talk to you.\n"Shambhavi": Chirag's excuse for disappearing for 1 hour every night, after which he returns with 200% more romantic energy.`,
+  `The Kaddu Queen 🎃\nChetna sits for dinner, what's upon her plate?\nIs it pizza, pasta, or something really great?\nNo, it's Kaddu and Bhindi, her ultimate delight,\nEating okra and pumpkin well into the night.\nChirag eats his vada pav, shedding a tiny tear,\nWhile Chetna eats her veggies, the healthiest girl here.`,
+  `The Medical Zombie 🧟\nNineteen subjects, thirty-six chapters to go,\nChetna's in the library, moving rather slow.\nShe's holding human livers and staring at a brain,\nWhile Chirag texts her fifty times, driving her insane.\nTen hours of studying, her brain is mostly fried,\n"I'm just taking a nap," the sleepy doctor sighed.`,
+  `The Beach Delusion 🏖️\nA magical beach bonfire, the ocean breeze is sweet,\nChetna's walking barefoot, no chappals on her feet.\nHer imaginary boyfriend is looking rather fine,\nIn black trousers and a brown polo, truly by design.\nShe's in a skirt and t-shirt, layering like a pro,\nBut where this invisible boyfriend is, only the delulu know.`,
+  `The Magic Trick 🪄\n"Pick ten things," the wizard Chirag said,\nPlaying silly mind games to mess inside her head.\nHe crossed out Kedarnath, volleyball, and friends,\nWorking his grand magic until the very end.\nHe revealed the hidden message, feeling rather proud,\nWhile Chetna sat in shock, crying out loud.`,
+  `The Bhajan & Chocolate Combo 🍫\nWhat is the Chetna aesthetic? Let's take a little look,\nIt's ignoring all her friends to stare into a book.\nIt's listening to Krishna bhajans while feeling kinda sick,\nAnd eating Dairy Milk chocolate to do the healing trick.\nShe's a chaotic mix of holy songs and medical despair,\nRunning on two hours of sleep and completely messy hair.`,
+];
+
+const genericTemplates = [
+  "Just a daily reminder that Chetna is {adj}.",
+  "Chetna being {adj} again — name a more consistent icon, I'll wait.",
+  "Fun fact: Chetna is {adj} and doesn't even realise it.",
+  "Chirag loves Chetna so much, and honestly, who wouldn't.",
+  "Chetna loves Chirag back too — best plot twist on this entire timeline.",
+  "Chetna's smile should genuinely come with a warning label.",
+  "Chetna likes tulips 🌷 and now everyone in this app likes tulips too.",
+  "If being {adj} was a competition, Chetna would win without even trying.",
+  "Chetna ke bina din thoda adhoora lagta hai, fr fr.",
+  "Reminder: drink water, stretch a little, and remember that Chetna is {adj}.",
+  "Breaking news: local guy Chirag still can't stop thinking about how {adj} Chetna is.",
+  "Chetna said something funny today and honestly I'm still smiling about it.",
+  "Chetna's energy alone could fix anyone's entire bad day.",
+  "Not me building a whole app just to say Chetna is {adj}. But here we are.",
+  "Chetna is, and always will be, the best topic of conversation.",
+  "Someone please tell Chetna she's not allowed to be this {adj} AND this humble at the same time.",
+  "Chetna's laugh is basically the background music of this whole week.",
+  "Chetna deserves the entire world. This website is just a start.",
+  "Kitni cute harkatein karti hai Chetna, seriously, somebody stop her (please don't, never stop).",
+  "Chetna being effortlessly {adj} — your daily public service announcement.",
+  "Chetna understood the assignment. The assignment was being {adj}.",
+  "Every group chat needs a Chetna. Every day needs a Chetna. Change my mind.",
+  "Today's forecast: mostly sunny, with a high chance of Chetna being {adj}.",
+  "Studies show 10/10 people who talk to Chetna leave the conversation happier.",
+  "Chetna walks into a room and it immediately feels a little more {adj}.",
+];
+
+const adjectives = [
+  "amazing","beautiful","stunning","adorable","incredible","wonderful","the sweetest",
+  "one of a kind","absolutely lovely","warm-hearted","insanely talented","effortlessly pretty",
+  "full of light","a whole vibe","top tier","unmatched","precious","a blessing","magnetic","radiant",
+  "kind","hilarious","brilliant","graceful","genuine","thoughtful","iconic","glowing","charming","real"
+];
+
+/* ---------- SPONSORED / AD POSTS (exactly these 6, no more) ---------- */
+const adPosts = [
+  {
+    icon: "🧘",
+    sponsor: "Miracle Of Mind",
+    text: "Miracle Of Mind – A Global Mental Health Initiative By Sadhguru. Just invest 7 minutes of your day to experience the joy of life. Our studies at Harvard have proven that it increases brain productivity in just a single session 😊",
+    cta: "Try 7-Minute Session"
+  },
+  {
+    icon: "🪔",
+    sponsor: "Devi Stuti",
+    text: "Devi Stuti: A magical chant to offer to Devi Maa, which can enhance your way of living 😊 It just takes 6 minutes to chant one cycle and it makes Devi Maa so happy!! Don't postpone, offer your today's Devi Stuti to Devi.",
+    cta: "Chant Now"
+  },
+  {
+    icon: "🕉️",
+    sponsor: "Sadhguru App",
+    text: "Have you ever tried the Brahmananda Swarupa chant on the Sadhguru App? Sadhguru says just by chanting or listening to it with eyes closed creates a joyful and pleasant experience in your life. It enhances focus. Removes fear. You can listen to it through the Sadhguru App 😊",
+    cta: "Listen On Sadhguru App"
+  },
+  {
+    icon: "⚙️",
+    sponsor: "Inner Engineering",
+    text: "Inner Engineering — just the way we engineer the outer world, there is a technology to engineer our inner world in the way we want to 😊 Inner Engineering offers powerful tools, using which you can create a life that you wanna live. It also offers the 21-minute Shambhavi Mahamudra Kriya, which alone can transform you in many ways 😊. Check Inner Engineering on the Sadhguru App.",
+    cta: "Explore Inner Engineering"
+  },
+  {
+    icon: "✨",
+    sponsor: "Chit Shakti Meditations",
+    text: "Have you ever tried the Chit Shakti Meditations on the Sadhguru App? They are basically manifestation techniques. You can manifest love, health, peace, success — there is a specific method for each one of the above. Try it! It works 😊",
+    cta: "Start Manifesting"
+  },
+  {
+    icon: "🕊️",
+    sponsor: "Sadhguru",
+    text: "\"A world full of love, light and laughter — it's time has come, let's make it happen!\" — Sadhguru",
+    cta: "Read More Quotes"
+  }
+];
+
+const commentPool = [
+  "wow chetna and chirag are just made for each other 😭",
+  "okay this is too cute, i can't even",
+  "chirag simps confirmed and honestly we respect it",
+  "chetna deserves ALL of this and more fr",
+  "not me getting invested in this real life rom-com",
+  "the way he talks about her omg stop",
+  "certified cutest duo on this entire app",
+  "chetna if you don't say yes i genuinely will",
+  "this is giving soulmates energy no cap",
+  "okay cupid we see you working overtime here",
+  "chirag really said 'let me build a whole app' 💀 iconic behaviour",
+  "chetna's reaction to this better be adorable",
+  "i'm not crying you're crying",
+  "this is exactly the content i signed up for",
+  "protect this duo at all costs 🛡️",
+  "chetna please just marry this man's whole personality",
+  "the pink theme matches the vibe so perfectly",
+  "someone start the wedding countdown i'm serious",
+  "screenshotting this for the group chat immediately",
+  "literally the softest corner of the internet rn",
+  "chetna and chirag rent free in my mind now",
+  "this whole feed has zero flops, respect",
+  "the effort here is unmatched, chetna is lucky",
+  "why am i tearing up over a website",
+  "10/10 no notes, this is peak romance",
+  "sir this is a whatsapp status not an app 😭",
+  "the delulu is not the solulu but this one worked out great",
+  "someone alert the nobel committee, greatest love story of our generation",
+  "he coded an entire app instead of just texting her 💀 icon behaviour",
+  "not chirag speedrunning main character energy",
+  "chetna waking up to a whole app about her, humbling honestly",
+  "the algorithm brought me here and i'm not mad about it",
+  "this is what they mean by 'built different'",
+  "sobbing, screaming, throwing up, this is so sweet",
+  "chirag really said 'let me shoot my shot via css'",
+  "certified wife material behaviour from chetna, husband material from chirag",
+  "the fact that this is REAL and not fanfiction is wild",
+  "bro turned a crush into a full stack project",
+  "this app has more effort than my final year project ngl",
+  "chetna if this doesn't work out i'm suing cupid personally",
+  "the plot armor on this love story is unmatched",
+  "not the pink theme making me emotional too",
+  "chirag's love language is clearly frontend development",
+  "someone give this man a raise, an award, something",
+  "this is the wholesome content the internet needed today",
+  "i came for the app and stayed for the storyline",
+  "chetna, sign here ___ (marriage certificate, obviously)",
+  "the bar for romantic gestures has been raised forever",
+  "petition to make this a bollywood movie, i'll produce it",
+  "the commitment to this bit is genuinely inspiring",
+  "not me taking notes for my own situationship",
+  "chirag out here doing lord of the rings level effort for one girl",
+  "chetna better appreciate this man's html and his heart",
+  "the audacity to be this in love AND this good at css",
+  "okay but who hurt chirag into being this romantic, we love it",
+  "this deserves a spot in the hall of fame of grand gestures",
+  "not a single cap in this whole post, real ones know",
+  "chetna's luck fr, some of us are still single scrolling this",
+  "the way this feed radiates pure joy, unmatched energy",
+  "someone check on me i think i just fell in love with their love story",
+  "bookmarking this feed for whenever i lose faith in romance",
+  "chirag's git commits are probably all just her name at this point",
+  "the fact this loads on mobile AND makes me emotional, elite",
+  "chetna is single-handedly funding my need for wholesome content",
+  "not the responsive design making my heart rate go up too",
+  "he really said 'i'll deploy my feelings to production'",
+  "this man skipped stack overflow to write her a love letter instead",
+  "the semicolons in this app have more romance than my whole dating life",
+  "chetna should frame this feed, not just scroll it",
+  "genuinely rooting for these two more than my own plans this year",
+  "the css transitions are smoother than my rizz will ever be",
+  "someone tell chirag this is illegal levels of adorable",
+  "not this making me reconsider my situationship immediately",
+  "the effort to entertainment ratio here is off the charts",
+  "chetna walked so this whole feed could run",
+  "he built a UI for his feelings, unheard of behaviour honestly",
+  "the way every post somehow tops the last one, magic",
+  "i refresh this page more than i refresh my own texts",
+  "this is what 'shoot your shot' actually looks like fr",
+  "the boyfriend material radiating off this entire page",
+  "chetna's group chat must be UNHINGED after seeing this",
+  "not me forwarding this to three different people already",
+  "the plot twist nobody expected: pure, uncomplicated love",
+  "this app has more character development than most shows",
+  "chirag understood the assignment and then some",
+  "the way this whole thing is coded with love, literally",
+  "okay this is my new comfort scroll, no notes",
+  "chetna if you're reading the comments too, say yes",
+  "the sheer dedication to one crush, i respect the grind",
+  "not this being the plot of a movie i'd actually pay to watch",
+  "he chose frontend development as his love language and won",
+  "this feed said 'grand gesture' and meant it",
+  "someone's getting married because of good UX design, iconic",
+  "the way this whole app is basically a love letter with a navbar",
+  "chetna's future kids are gonna find this app one day and cry",
+  "not me getting attached to fictional avatars, send help",
+  "this deserves way more likes than it's getting honestly",
+  "the vibes here are unmatched, certified soft launch of the century"
+];
+
+const botNames = [
+  "cupid_bot","shipper_central","hopeless_romantic22","team_chiragxchetna","cute_overload",
+  "not_a_bot_promise","the_real_matchmaker","notif_gang","softlaunch_watcher","tulip_enjoyer",
+  "wholesome_only","certified_shipper","onlyhere4content","backseat_cupid","pink_theme_fan",
+  "3am_scroller","professional_fangirl","chai_and_gossip","daily_love_reporter","heart_eyes_hq"
+];
+
+const namesPool = ["Chirag Kothari","chirag ❤ chetna","Chirag"];
+const handle = "@chiragxchetna";
+
+/* ---------- named commenters from Chirag's chats, with his replies ---------- */
+const namedCommenters = [
+  { name: "Chirag ke Senior Sir", avatarClass: "senior", initials: "S", lines: [
+    { text: "Beta ye sab office time me mat kiya karo, kaam pe dhyan do 😑", reply: "Sir ekdum sahi bol rahe ho, bas ek comment tha, promise 🙏😂" },
+    { text: "Isko dekho, case files ke bajaye yaha comment kar raha hai", reply: "Sir case files bhi ho jayengi, ye emergency thi 😂" },
+    { text: "Chetna ji, isko thoda kaam pe focus karwaiye please", reply: "Sir bas 2 minute, phir seedha kaam pe 😅" },
+    { text: "Iska dhyan sirf ek hi jagah lagta hai aajkal, samjh gaya mai", reply: "Sir aap toh sab samajh jaate ho 🙈" },
+    { text: "Meeting me bhi phone ke neeche isi app ko dekh raha tha, maine dekh liya", reply: "Sir wo... bas ek notification tha 😅🙏" },
+    { text: "Appraisal ka time aa raha hai, thoda office pe bhi dhyan do beta", reply: "Sir ekdum dhyan hai, ye toh sirf break me hota hai 😂" },
+    { text: "Chalo achha hai kam se kam kisi cheez me toh itni lagan hai isme", reply: "Sir aapka blessing chahiye bas 🙏❤️" }
+  ]},
+  { name: "Yash · Chirag's junior", avatarClass: "junior", initials: "YB", lines: [
+    { text: "bhaiya itna cute post kaise kar sakte ho, dil khush ho gaya 🥹", reply: "seekh le thoda tu bhi, kaam aayega 😂" },
+    { text: "didi bhaiya poora din bas ye hi dikhate rehte the office me", reply: "chup kar Yash, izzat ka sawaal hai 😭" },
+    { text: "bhaiya ka toh pura vibe hi alag ho jata hai jab chetna didi ka naam aata hai", reply: "sach hai yaar, kya karu 🫠❤️" },
+    { text: "arre bhaiya ye post toh maine bhaiya ke phone me pehle hi dekh liya tha 😂", reply: "Yash tu bahut zyada dekhta hai mera phone 😭" },
+    { text: "bhaiya se coding seekhne aaya tha, ab relationship advice bhi free me milta hai", reply: "dono hi free hai tere liye, seekh le jitna seekhna hai 😂" },
+    { text: "office ka wifi bhi shayad chetna didi ke naam pe hi chalta hai ab", reply: "bilkul sahi pakda hai Yash 😭❤️" },
+    { text: "bhaiya jab se ye app banaya hai tab se code review bhi jaldi ho jaata hai, mood acha rehta hai", reply: "khush rehna chahiye na, warna kaam kaise hoga 😂" },
+    { text: "didi ko batao bhaiya kitni der se stand up meeting me bhi inka naam liya", reply: "Yash chup, sabko sab kyu batata hai 😭" }
+  ]},
+  { name: "Aryan · Chirag's friend", avatarClass: "friend", initials: "AK", lines: [
+    { text: "bhai ye tune poora app bana diya, pagal ho gaya hai kya 😭", reply: "haan bhai, ishq me sab jayez hai 😂" },
+    { text: "isko dekho, saara din bas chetna chetna karta rehta hai", reply: "sach bol raha hai ye, maan lo 😅" },
+    { text: "chetna itna patience rakhne ke liye tumhe award milna chahiye, isse deal karna easy nahi 😂", reply: "oye chup kar Aryan 😭" },
+    { text: "bhai coding chhod, tu toh full time simp ban gaya hai", reply: "coding bhi hoti hai bhai, ye toh side project hai ❤️😂" },
+    { text: "yaad hai jab tu keh raha tha bas ek crush hai, kuch nahi hai 😂", reply: "wo phase tha bhai, ab commitment hai 🙈" },
+    { text: "bhai ab toh hostel ke sab log bhi jaante hai teri kahani", reply: "publicity free me mili hai, thanks Aryan 😭" },
+    { text: "isse zyada effort toh maine apne finals ke liye nahi lagaya", reply: "priorities sahi honi chahiye bhai 😂❤️" },
+    { text: "chetna ko bol dena is banda ka backup plan bhi wahi tha, dusra kuch socha hi nahi", reply: "bilkul nahi socha, ek hi plan tha hamesha 🙏😅" }
+  ]},
+  { name: "Tarot Healer ✨", avatarClass: "alt", initials: "TH", lines: [
+    { text: "the cards are telling me this is destiny, just saying 🔮", reply: "cards kabhi galat nahi hote, bas keh raha hu 😌" },
+    { text: "mercury is in your favour today chirag, use it wisely 😉", reply: "already use kar liya, propose kar diya 😂" },
+    { text: "i see a wedding in the near future... just a vibe check 👀", reply: "vibe sahi hai healer ji 🙏😂" },
+    { text: "your aura is giving 'whipped' energy today chirag", reply: "aura sach bol raha hai actually 😭❤️" },
+    { text: "the universe conspired for this, don't fight it chirag", reply: "nahi lad raha, poora surrender hu is baar 🙏" },
+    { text: "pulled a card for chetna too and it's literally 'the lovers', no cap", reply: "healer ji ab toh proof mil gaya 😭❤️" },
+    { text: "your energies are aligned, just needed to manifest a lil more effort and you did", reply: "manifest + html dono kiya, best combo 😂" },
+    { text: "saturn is testing your patience but venus says it's worth it chirag", reply: "venus sahi bol rahi hai, patience worth it hai 🙏❤️" }
+  ]}
+];
+const namedCommenterPool = [];
+namedCommenters.forEach(person=>{
+  person.lines.forEach(line=>{
+    namedCommenterPool.push({ name: person.name, avatarClass: person.avatarClass, initials: person.initials, text: line.text, reply: line.reply });
+  });
+});
+const nextNamedComment = makeDispenser(namedCommenterPool);
+
+/* ---------- Chirag's replies to random bot/fan comments ---------- */
+const genericReplyPool = [
+  "haha thank you sab 🙈❤️",
+  "bas usi ke liye kiya sab kuch 😅",
+  "you guys are too sweet fr 🥹",
+  "manifesting the same energy honestly",
+  "she deserves way more than this ngl",
+  "bilkul, wo hi wajah hai isse banane ki ❤️",
+  "not gonna lie, thoda nervous bhi hu ki dekhe kaise",
+  "thank you thank you, keep the good vibes coming 🙏",
+  "haha ab toh bas uska reaction dekhna baaki hai",
+  "you get it, that's exactly the vibe 😭",
+  "trying my best over here fr",
+  "lol true, ishq me thoda pagalpan chalta hai",
+  "appreciate you guys shipping this so hard 🫶",
+  "let's see if she says yes first 👀",
+  "haha this comment section is more supportive than my group chat",
+  "sach me, effort toh dil se hai",
+  "no cap, she's worth every single line of code",
+  "you guys are the real cupids here honestly",
+  "thoda scared thoda excited, dono hi",
+  "bas ab fingers crossed 🤞",
+  "haha stop, i'm blushing reading this",
+  "she better see this comment section too 😂",
+  "one hundred percent worth it, no regrets",
+  "thank you for believing in this more than i do sometimes 😭"
+];
+const nextGenericReply = makeDispenser(genericReplyPool);
+
+/* ---------- REELS: imaginary cute convos ---------- */
+const reelConvos = [
+  [["ch","aaj bahut yaad aayi tumhari"],["c","sach me?"],["ch","har second 🙂"],["c","hehe mujhe bhi"]],
+  [["ch","tumhe pata hai tum kitni pyari ho?"],["c","nahi pata, tum batao na"],["ch","itni ki maine ek pura app bana diya"],["c","tum pagal ho 😭"]],
+  [["c","bolo bolo chirag"],["ch","bas ye ki... I love you"],["c","yayyy love you too"]],
+  [["ch","gussa ho mujhse?"],["c","thoda"],["ch","sorry meri pyari sundari"],["c","chal maan gayi"]],
+  [["ch","aaj khana khaya?"],["c","abhi karungi"],["ch","jaldi kar lena, warna daant lagaunga"],["c","itni fikar? 🥹"],["ch","hamesha"]],
+  [["c","itna mat socho chirag"],["ch","tumhare liye toh sochunga hi"],["c","cute ho tum"],["ch","tumse zyada nahi"]],
+  [["ch","pink dress me kaisi lag rahi thi pata hai?"],["c","kaisi?"],["ch","duniya se sundar"],["c","😭😭"]],
+  [["c","movie dekhne chale?"],["ch","horror wali?"],["c","haan"],["ch","sirf tumhare liye dekhunga, warna darr lagta hai"],["c","hero ho tum toh 😂"]],
+  [["ch","chai piyogi mere saath?"],["c","haan chalo"],["ch","bas tumhare saath hi achhi lagti hai chai"]],
+  [["c","tum bohot cute harkatein karte ho"],["ch","tumse seekha hai"],["c","jhootha"],["ch","sach me"]],
+  [["ch","aaj call karu?"],["c","haan mai jaagi hu"],["ch","good, kyuki tumhari awaaz sunni hai"]],
+  [["c","manifestation try kiya maine"],["ch","kya manifest kiya?"],["c","tumhe khush rehte dekhna"],["ch","already ho gaya"]],
+  [["ch","tumhe tulips pasand hai na?"],["c","haan, kaise pata?"],["ch","kyuki tumhare baare me sab yaad rehta hai mujhe"]],
+  [["c","sorry maine tumhe ignore kiya"],["ch","koi nahi, mai samajhta hu"],["c","tum kitne achhe ho"],["ch","tumhare liye"]],
+  [["ch","kal mila jo?"],["c","haan, tum bohot cute lag rahe the"],["ch","tum roz cute lagti ho"],["c","flatterer 😂"]],
+  [["c","dance dikhau kabhi?"],["ch","haan zaroor, main first row me baithunga"],["c","sirf tumhare liye perform karungi"]],
+  [["ch","waise tumhare jaisa koi nahi hai"],["c","tum bhi"],["ch","we're a match then"]],
+  [["c","aaj mood off tha"],["ch","kyun, batao mujhe"],["c","bas tumse baat karke thik lag raha hai"],["ch","mai hamesha hu"]],
+  [["ch","art class kaisi rahi aaj?"],["c","achhi, ek painting banayi"],["ch","dikhao na"],["c","sirf tumhe dikhaungi"]],
+  [["c","chirag tumhe pata hai kya?"],["ch","kya?"],["c","tum meri favourite person ho"],["ch","tum meri poori duniya ho"]],
+  [["ch","itni der kyu lagi reply karne me"],["c","busy thi thoda"],["ch","koi nahi, jab bhi free ho, mai wait kar sakta hu"],["c","itne patient kaise ho tum"]],
+  [["c","tumhare bina din adhoora lagta hai"],["ch","mera bhi, tumhare bina kuchh sahi nahi lagta"],["c","toh chalo saath rehte hai"],["ch","deal 🤝"]],
+  [["ch","tumhari favourite colour pink hi hai na?"],["c","haan, tumhe kaise itna yaad rehta hai"],["ch","tumse juda hai toh yaad hi rehta hai"]],
+  [["c","aaj thoda tired feel ho raha"],["ch","aaram karo, mai baad me baat kar lunga"],["c","tumhare itna samajhdaar hone se pyaar hota hai"],["ch","tumse hi seekha"]],
+  [["ch","Listen Sahiba, the universe, Sadhguru, my wild fantasies, the cosmic connection between our souls, and how much I love you are all intricately connected..."],["c","Heheee 🤭"]],
+  [["ch","As a lawyer, I object to you studying for 13 hours straight!"],["c","Overruled. I'm a medical student, I live on 3 hours of sleep and black coffee."],["ch","Fine, then I'm suing you for stealing my heart."],["c","Good luck, I know exactly which extraocular muscle to paralyse so you can't even look at the judge."]],
+  [["c","Wait, are you seriously just a massive cringe package who uses 🥺 and 👉👈 unironically?"],["ch","Always have been, Babe. 😭😭😭😚😚😚🤌🤌"],["c","I hate that I'm falling for this."]],
+  [["ch","I'm a vegan, I treat my body as a temple."],["c","I'm a medical student, I've literally held a human liver in my hands. Pass the chicken."],["ch","..."],["c","But I'll eat your Aloo Parathas if you feed them to me."]],
+  [["c","Listen, if I had 22 marks left, I would have asked you, but your handwriting sucks, my brain has run out of oxygen, and I have a boyfriend who sends me 8-minute voice notes. Bye."],["ch","(from a distance, intensely proud wife-paglu noises) 🥹"]],
+  [["ch","How to trap a corporate lawyer/Isha volunteer: just tell him you have a mild fever (98.5°C) and watch him panic, prescribe you hot water, drop his entire schedule, and offer to give you a head massage."]],
+  [["ch","Bahut hua patients, ab meri wife ka time hai!"],["c","(hides her blushing face in his shoulder) 🙈"]],
+  [["ch","A Statistical Analysis of Our Relationship — times I got 'Katti' today: 14. Times I un-Katti'd myself 2 seconds later: 14. Times Chetna actually got mad: 0, she was just sleepy. Times Tanay regretted introducing us: Infinity."]],
+  [["ch","@advocate.chiraag: My girlfriend's mom dragged her by the hair to make her study. Currently looking up the exact penal codes to legally emancipate my 20-year-old medical student girlfriend so she can finally get her required 18 hours of sleep. #JusticeForChetna #WifePaglu"]],
+  [["ch","Tanay's Inner Monologue — I literally just introduced them so they could say a casual 'hi/hello' and maybe be friends. It's been a few weeks and they are already discussing their 2030 wedding date, matching their Kundalis, and planning trips to Linga Bhairavi. What have I done? I am not a matchmaker, I am a hostage to their romance."]],
+  [["ch","Guys, I told my girlfriend that to pass a new law in our constitution, we need to kiss for exactly 2 seconds. If the kiss exceeds 2 seconds, the assent is void and the law is rejected. I'm literally going to filibuster every single bill she proposes."],["c","I'm a medical student, babe. By the time I finish my 19 subjects, my brain is dead. Just pass the damn bill, I need to sleep. 😴"]],
+  [["ch","Bohot hua patients! Chalo!"],["c","Chirag wtf put me down! Mera 7 marks ka Extraocular muscle ka operation chal raha hai!"],["ch","I don't care! I have a 10/10 romance score in my Kundali and my Mars is at 0! We are going to Marine Drive!"]],
+  [["c","Wait, what's your religion? Don't scare me."],["ch","I am Muslim."],["c","WHAT? My parents will kill me. HELLO?? EXPLAIN? Are you serious?? My BP is dropping like a roller coaster."],["ch","Bro chill I'm Jain. I'm just a little silly, a little goofy 🤪 My name is Chirag Kothari, how can I be Muslim?"],["c","I am going to murder you."],["ch","Awww my angry sahiba is so cute 🥰"]],
+  [["c","Babe... imagine it's 3 AM on a family vacation. We sneak out. We go for a long drive. I put my legs on your lap while you drive... 😭😭😭"],["ch","Chetna... that is literally the bare minimum. You are crying over traffic laws. Let me tell you MY fantasy. I will make you wear a saree, take you to a garden, sit at your feet, and personally tie an anklet on your leg while everyone watches."],["c","Yep, we are both doomed."]],
+  [["ch","Baby?"],["ch","I love you so much."],["ch","You are the most beautiful girl. I am so lucky."],["c","Hii"],["c","I was eating chole bhature."],["c","Soja bhondu."]],
+  [["ch","Advocate Panda's Victim 📱\nPing! Ping! Ping! The WhatsApp starts to ring,\nIt's Chirag the Dictator, doing his usual thing.\n\"Chetnaaa! Cheeeeetnaaaa! Kaha ho tum aaj?\"\nHe's sending fifty voicenotes, a digital barrage."],["c","She says she's getting irritated, ready to block and flee,\nBut deep down she enjoys the daily bakchodi."]],
+  [["c","The 32si Threat 😤\n\"Chup reh kutte,\" she types with rolling eyes,\nAs Chirag sends her stickers of very massive size.\n\"Meri 32si nikal dungi,\" she threatens with a glare,\nThough he's safe in Mumbai, with zero actual care."],["ch","She claims she's super innocent, a quiet little mouse,\nBut she'll knock out all his teeth if he ever visits her house."]],
+  [["ch","The 7-Minute Fail 🧘\n\"Just seven minutes, Chetna, close your eyes and breathe,\"\nChirag sends a link, hoping she'll find some peace beneath."],["c","Two minutes in, her head begins to pound and ache,\n\"I can't do this meditation, it was a huge mistake!\"\nShe closes the app, ignores the inner light,\nAnd goes back to physiology, studying through the night."]],
+  [["c","The Sleep-Deprived Aries ⏰\nShe sleeps at 1 AM, and wakes up bright at six,\nRunning on pure stress and medical student tricks.\n\"Uth jaa aalsi!\" she yells at sleepy Chirag's phone,\nWhile she sits in the library, exhausted and alone."],["ch","\"I'll study for thirteen hours,\" she ambitiously claims,\nBut ends up watching reels and playing guessing games."]],
+  [["c","The Abroad Escape Plan ✈️\n\"I'm moving to Australia, or Germany perhaps,\"\nShe declares while looking at European maps.\n\"I'll take my bestie with me, and maybe adopt a dog,\nAnd leave this hectic medical life behind a heavy fog.\""],["ch","She doesn't want a marriage, just a visa and a flight,\nTo finally get eight hours of sleep on a peaceful, quiet night."]]
+];
+
+const reelCommentExtra = [
+  "this convo has main character energy fr",
+  "why is this cuter than every rom-com i've seen",
+  "the 'sirf tumhare liye' line got me sobbing",
+  "chetna please date him already at this point",
+  "chirag really said the smoothest things ever",
+  "not me screenshotting this whole convo",
+  "the softness in this chat is unreal",
+  "okay this belongs in a movie not an app",
+  "the way he types like this in real life too probably, unfair",
+  "chetna's replies live in my head rent free now too",
+  "this is giving 'they were roommates' energy but better",
+  "why do i feel like i'm intruding on something so personal",
+  "the chemistry through TEXT alone, incredible",
+  "okay writer's room, who approved this level of cute",
+  "i need a chirag translator for my own texts please",
+  "this convo deserves its own Netflix series honestly",
+  "the pacing, the tension, the payoff — 10/10 script",
+  "not this being more romantic than actual movies",
+  "chetna out here collecting the sweetest replies fr",
+  "the 'we're a match then' line just fixed my whole week",
+  "the way he says 'hamesha' like it's nothing, sir i am WEEPING",
+  "this reel should come with a warning label for the heart",
+  "chetna's replies are giving effortlessly cute, unfair advantage",
+  "i've watched this on loop and i regret nothing",
+  "the tone shift from teasing to soft is *chef's kiss*",
+  "not chirag being smooth even in text messages, make it make sense",
+  "this belongs in a museum of good texting, honestly",
+  "the way she says 'sirf tumhare liye' lives in my head now",
+  "somebody archive this convo it's a national treasure",
+  "the patience in his replies is giving whole different league",
+  "not me pausing just to reread that one line again",
+  "chetna better be framing these texts somewhere",
+  "this is the softest 12 seconds on the whole internet",
+  "the audio wasn't even needed, the texts did all the talking",
+  "why does this feel like i'm reading someone's diary and i love it",
+  "the comfort in this convo is unreal, protect this energy",
+  "not this reel curing my faith in situationships single handedly"
+];
+
+/* ---------- shared comment dispenser: no immediate repeats anywhere ---------- */
+function makeDispenser(pool){
+  let queue = [];
+  let lastPicked = null;
+  return function next(){
+    if(queue.length === 0){
+      queue = shuffle(pool);
+      if(queue[0] === lastPicked && queue.length > 1){
+        [queue[0], queue[1]] = [queue[1], queue[0]];
+      }
+    }
+    const val = queue.pop();
+    lastPicked = val;
+    return val;
+  };
+}
+const nextComment = makeDispenser(commentPool.concat(reelCommentExtra));
+
+/* build N posts */
+function buildPosts(n){
+  const posts = [];
+  const usedSpecial = shuffle(specialPosts);
+  for(let i=0;i<n;i++){
+    let text;
+    if(i < usedSpecial.length){
+      text = usedSpecial[i];
+    } else {
+      const t = pick(genericTemplates);
+      text = t.replace("{adj}", pick(adjectives));
+    }
+    const likes = 40 + Math.floor(Math.random()*260);
+    const rts = 5 + Math.floor(Math.random()*60);
+    const nComments = 2 + Math.floor(Math.random()*3);
+    const comments = [];
+    const usedNames = new Set();
+    const usedTexts = new Set();
+    for(let c=0;c<nComments;c++){
+      let bn = pick(botNames);
+      let tries=0;
+      while(usedNames.has(bn) && tries<6){ bn = pick(botNames); tries++; }
+      usedNames.add(bn);
+      let ct = nextComment();
+      let ctries=0;
+      while(usedTexts.has(ct) && ctries<4){ ct = nextComment(); ctries++; }
+      usedTexts.add(ct);
+      const entry = { name: bn, text: ct };
+      if(Math.random() < 0.8){
+        entry.reply = { name: "Chirag", text: nextGenericReply() };
+      }
+      comments.push(entry);
+    }
+    if(i % 3 === 1){
+      const nc = nextNamedComment();
+      const namedEntry = { name: nc.name, text: nc.text, avatarClass: nc.avatarClass, initials: nc.initials };
+      if(Math.random() < 0.8){
+        namedEntry.reply = { name: "Chirag", text: nc.reply };
+      }
+      comments.push(namedEntry);
+    }
+    const hoursAgo = i+1;
+    posts.push({ text, likes, rts, comments, time: hoursAgo<24 ? `${hoursAgo}h` : `${Math.floor(hoursAgo/24)}d` });
+  }
+  return posts;
+}
+
+/* ---------- CONVERSATIONS ---------- */
+const conversations = {
+  chirag: {
+    name: "Chirag Kothari",
+    initials: "CK",
+    avatarClass: "",
+    status: "active now",
+    online: true,
+    autoReplySpam: [
+      "Hey you are hereee????",
+      "Chetnaaaaaaa",
+      "Meri Pyari Chetnaaaaaaaaaaaaaaa!!!!! 😘",
+      "😘😘😘😘😘",
+      "I Love You So Much",
+      "Reply karo na yaar 🥹❤️"
+    ],
+    getMessages: () => buildMessages(210)
+  },
+  tarot: {
+    name: "Tarot Healer ✨",
+    initials: "TH",
+    avatarClass: "alt",
+    status: "last seen recently",
+    online: false,
+    autoReply: "just marry him you idiot",
+    getMessages: () => [
+      { day: 1, time: "11:42 PM", text: "omg this chirag guy seems like he likes you... you can try giving him a chance maybe? 👀🔮" }
+    ]
+  },
+  friend: {
+    name: "Aryan · Chirag's friend",
+    initials: "AK",
+    avatarClass: "friend",
+    status: "online",
+    online: true,
+    autoReply: "😁😁 hehe",
+    getMessages: () => [
+      { day: 1, time: "3:06 PM", text: "hey chetna, sirf ye batana tha — chirag pura din tense sa dikh raha tha aaj, tumse gussa the na thoda?" },
+      { day: 1, time: "3:07 PM", text: "vo baar baar phone dekh raha tha, keh raha tha tumne reply nahi kiya abhi tak" },
+      { day: 2, time: "8:52 PM", text: "bhai ne aaj keh diya 'mai kabhi tujhse gussa nahi hoon meri pyari sundari' — full drama, but he meant every word lol" },
+      { day: 2, time: "8:53 PM", text: "he genuinely looked worried while saying it, not even joking" },
+      { day: 3, time: "9:41 PM", text: "chetna he asked me thrice today if you're okay. THRICE." },
+      { day: 3, time: "9:42 PM", text: "kept saying 'shayad chetna gussa hai mujhse' under his breath, it was kind of sweet ngl" },
+      { day: 4, time: "2:52 PM", text: "he didn't really eat lunch properly today, just kept staring at his phone waiting for your text" },
+      { day: 4, time: "2:53 PM", text: "the moment you replied he literally smiled at his screen like an idiot, just fyi" },
+      { day: 5, time: "11:59 PM", text: "he told me 'main ignore nahi kar raha tha, bas nahake aaya' like ten times today, just in case you thought he was ignoring you" },
+      { day: 6, time: "2:49 PM", text: "ngl whenever you go quiet on him, he goes quiet too. kind of obvious how much he cares chetna" },
+      { day: 6, time: "2:50 PM", text: "he was pacing around after that call earlier, properly restless" },
+      { day: 7, time: "8:24 PM", text: "he said something today — 'usse itna pyaar hai ki gussa bhi nahi reh paata' — pretty sure he meant it about you" },
+      { day: 7, time: "8:25 PM", text: "I've genuinely never seen him this invested in making sure someone's okay" },
+      { day: 8, time: "11:50 PM", text: "he looked so relieved the second you texted back tonight, chetna. just thought you should know 🙂" }
+    ]
+  },
+  junior: {
+    name: "Yash · Chirag's junior",
+    initials: "YB",
+    avatarClass: "junior",
+    status: "online",
+    online: true,
+    autoReply: "😂🤣😂",
+    getMessages: () => [
+      { day: 1, time: "5:12 PM", text: "arre didi 🙈 aisa kaisa jadu kiya hai aapne chirag bhaiya pe? itni sundar ho kyaa?" },
+      { day: 1, time: "5:13 PM", text: "bhaiya toh aapka naam lete lete thakte hi nahi hai didi" },
+      { day: 2, time: "1:45 PM", text: "didi sach batana, itna cute kaise ho sakte ho aap? bhaiya toh kayal ho gaye hai poora" },
+      { day: 3, time: "7:38 PM", text: "arre didi wapas se jadu?? bhaiya aaj bhi bas aapki hi baatein kar rahe the" },
+      { day: 4, time: "9:02 PM", text: "didi itni sundar kaise ho yaar, bhaiya ka toh pura din hi aapke naam se start hota hai" },
+      { day: 5, time: "12:31 PM", text: "bhaiya se pucha maine 'aaj kya plan hai', bola 'chetna se baat karni hai' — bas itna hi jawab tha 😂" },
+      { day: 6, time: "6:47 PM", text: "arre didi seriously, itna jadu kaha se sikha aapne? bhaiya poore department me sabse zyada khush ho jaate hai jab aap message karti ho" },
+      { day: 7, time: "10:15 PM", text: "didi honestly you're too sundar for your own good, bhaiya ka toh dil hi nahi lagta kaam me jab tak aap reply nahi karti" },
+      { day: 8, time: "3:29 PM", text: "arre wahi baat didi, aisa kaisa jadu kiya hai aapne chirag bhaiya pe? itni sundar ho kyaa?" }
+    ]
+  },
+  devi: {
+    name: "Devi 🥹",
+    initials: "D",
+    avatarClass: "devi",
+    status: "online",
+    online: true,
+    autoReply: "😊 🫂",
+    getMessages: () => [
+      { day: 1, time: "7:04 AM", text: "beta Aaj Stuti offer nahi ki hai aapne mujhe..  plan hai karne kaaa????" }
+    ]
+  },
+  sadhguru: {
+    name: "Sadhguru",
+    initials: "SG",
+    avatarClass: "sadhguru",
+    status: "online",
+    online: true,
+    autoReply: "😊",
+    getMessages: () => [
+      { day: 1, time: "6:20 AM", text: "heyy you should also look at miracle of mind, atleast 7 minutes chetna" }
+    ]
+  },
+  senior: {
+    name: "Chirag ke Senior Sir",
+    initials: "S",
+    avatarClass: "senior",
+    status: "online",
+    online: true,
+    autoReply: "🙄🙄",
+    getMessages: () => [
+      { day: 1, time: "4:47 PM", text: "Ye chirag apke bare me sochte rehta hai aur kaam ke bich bhi apko text krta hai 😡... Usko smjhaoooooo" }
+    ]
+  }
+};
+let activeConvo = 'chirag';
+
+function renderConversationList(){
+  const wrap = document.getElementById('conversation-list');
+  const order = ['chirag','tarot','friend','junior','devi','sadhguru','senior'];
+  wrap.innerHTML = order.map(id=>{
+    const c = conversations[id];
+    const msgs = c.getMessages();
+    const last = msgs[msgs.length-1];
+    return `
+      <button class="dm-conversation" data-convo="${id}">
+        <div class="dm-conv-avatar ${c.avatarClass}">${c.initials}<span class="status-dot ${c.online ? '' : 'offline'}"></span></div>
+        <div class="dm-conv-info">
+          <div class="dm-conv-top">
+            <span class="dm-conv-name">${c.name}</span>
+            <span class="dm-conv-time">${last.time}</span>
+          </div>
+          <div class="dm-conv-preview">${last.text}</div>
+        </div>
+        ${msgs.length > 1 ? `<div class="dm-conv-badge">${msgs.length}</div>` : ''}
+      </button>
+    `;
+  }).join('');
+  wrap.querySelectorAll('.dm-conversation').forEach(btn=>{
+    btn.addEventListener('click', ()=> showThread(btn.dataset.convo));
+  });
+}
+const messageTemplates = [
+  "I love you Chetna.",
+  "Mai aapse bohot pyar karta hu Chetna.",
+  "Aap kitni sundar ho Chetna, pata hai?",
+  "Chetna, aaj bhi tumhari yaad aayi (jaise roz aati hai).",
+  "You have no idea how much you mean to me, Chetna.",
+  "Chetna, tumhari smile dekh ke poora din ban jata hai mera.",
+  "I hope you know how special you are, Chetna.",
+  "Tumse baat karke lagta hai sab thik hai, Chetna.",
+  "Chetna, you're the best part of my day, every single day.",
+  "Kitni cute ho tum Chetna, seriously, kitni baar bolu.",
+  "Mujhe tumhari awaaz sunni hai, Chetna.",
+  "Chetna, I'm so lucky to have you in my life.",
+  "Tumhara hasna dekh ke mera dil khush ho jata hai, Chetna.",
+  "Chetna, never change, tum perfect ho jaisi ho.",
+  "I could talk to you forever, Chetna.",
+  "Chetna, tum jaisi koi nahi hai, sach me.",
+  "You make everything better, Chetna.",
+  "Chetna, tumhare bina kuchh adhoora sa lagta hai.",
+  "I'm proud of you, Chetna, always and always.",
+  "Chetna, tumhari care karne ka mann karta hai hamesha.",
+  "You deserve the whole world, Chetna.",
+  "Chetna, aaj tumse baat karke bohot achha laga.",
+  "I love how real and honest you are, Chetna.",
+  "Chetna, tumhare jaisa insaan milna mushkil hai.",
+  "You're my favourite notification, Chetna.",
+  "Chetna, thank you for just being you.",
+  "I mean it every single time I say I love you, Chetna.",
+  "Chetna, tumhari cute harkatein kabhi mat rokna.",
+  "You're the softest person I know, Chetna.",
+  "Chetna, aaj bhi tumhari smile yaad aa rahi hai.",
+  "I hope I make you as happy as you make me, Chetna.",
+  "Chetna, tum ho toh sab sahi lagta hai.",
+  "You're amazing, Chetna, and I really mean that.",
+  "Chetna, main serious hu, tumse bohot pyar karta hu.",
+  "Good morning Chetna, you crossed my mind first thing today.",
+  "Good night Chetna, sapno me bhi tum hi rehna.",
+  "Chetna, tumhe pata hai kitni important ho tum mere liye?",
+  "I love you Chetna — aaj bhi, kal bhi, hamesha.",
+  "Chetna, tumhari energy hi alag hai, sabse alag.",
+  "You make ordinary days feel special, Chetna.",
+  "Chetna, I just wanted to say I love you. Again.",
+  "Itna mat socho, Chetna — mai hu na.",
+  "Chetna, tumhari baaton se hi mera din ban jata hai.",
+  "You're loved more than you realise, Chetna.",
+  "Chetna, tum bohot strong ho, pata hai na?",
+  "I'm grateful for you every single day, Chetna.",
+  "Chetna, mujhe bhi pata nahi kab se tumhe itna miss karne laga hu.",
+  "You said you started missing me too, Chetna — I never got over reading that.",
+  "Chetna, tumhari giggling-laughing-like-crazy waali energy is my favourite thing.",
+  "I trust you completely, Chetna, the way you trust me.",
+  "Chetna, remember when we used to say bhai-sis as a joke? Glad that phase is over 😂",
+  "Ghar pahunch ke call karna mat bhoolna, Chetna — I like knowing you're safe.",
+  "Chetna, sorry if I ever made you feel unheard — main hamesha sunne ke liye hu.",
+  "You said 'tell me I'll help uhh' the moment I needed it, Chetna. Not everyone does that.",
+  "Chetna, even on the days you need space, I'm still rooting for you quietly.",
+  "That state of pure calm and clarity — Chetna, you named it before I could.",
+  "Chetna, you said you're grateful I helped, but honestly I'm the lucky one here.",
+  "I like that you tell me when you're just tired and need time, Chetna — that's trust.",
+  "Chetna, hasi aati hai jab tum 'yayyyy' bolti ho, don't ever stop.",
+  "You give a miss call when you can't talk, Chetna, and somehow even that feels like you care.",
+  "Chetna, I meant it when I said I enjoyed every bit of that first conversation.",
+  "Take your time, Chetna — waise bhi tumhare liye time nikaalna mujhe achha lagta hai.",
+  "Chetna, tumne kaha tha na 'I believe u' — bas waise hi main bhi tumpe believe karta hu.",
+  "Chetna, phone rakhne ke baad bhi tumhari baatein sochta rehta hu.",
+  "You don't have to explain why you can't talk sometimes, Chetna — I get it, I'm still here.",
+  "Chetna, tumhara sorry bolna bhi itna cute lagta hai, chill karo thoda apne upar.",
+  "I still think about that '😭 maine kuchh galat toh nahi bola na' moment, Chetna — nahi bola, sab sahi tha.",
+  "Chetna, hasna kabhi mat rokna, especially not because of me.",
+  "You calmed me down with just 'calm down I trust uhh', Chetna — that stuck with me.",
+  "Chetna, main jaanta hu tum bohot kuchh sambhaal rahi ho — proud of you, always.",
+  "It's okay to need time by yourself sometimes, Chetna — main wait karna jaanta hu."
+];
+
+function buildMessages(n){
+  const msgs = [];
+  let hour = 20, minute = 5;
+  let day = 1;
+  for(let i=0;i<n;i++){
+    if(i>0 && i % 22 === 0){ day++; hour = 9 + Math.floor(Math.random()*10); minute = Math.floor(Math.random()*59); }
+    minute += 3 + Math.floor(Math.random()*9);
+    if(minute >= 60){ minute -= 60; hour = (hour+1) % 24; }
+    const h12 = ((hour+11)%12)+1;
+    const ampm = hour < 12 ? "AM" : "PM";
+    msgs.push({
+      day,
+      time: `${h12}:${String(minute).padStart(2,'0')} ${ampm}`,
+      text: messageTemplates[i % messageTemplates.length]
+    });
+  }
+  return msgs;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+function renderStories(){
+  const row = document.getElementById('stories-row');
+  const html = specialStories.map((s, idx) => `
+    <button class="story-item" data-idx="${idx}">
+      <div class="story-ring"><div class="story-avatar">${s.emoji}</div></div>
+      <div class="story-label">${idx===0 ? "Chirag" : "Chetna+"}</div>
+    </button>
+  `).join('');
+  row.innerHTML = html;
+  row.querySelectorAll('.story-item').forEach(btn=>{
+    btn.addEventListener('click', ()=> openStory(parseInt(btn.dataset.idx)));
+  });
+}
+
+let storyIndex = 0;
+function openStory(idx){
+  storyIndex = idx;
+  document.getElementById('story-modal').classList.add('show');
+  paintStory();
+}
+function paintStory(){
+  const s = specialStories[storyIndex];
+  document.getElementById('story-card').style.background = GRADIENTS[storyIndex % GRADIENTS.length];
+  document.getElementById('story-emoji').textContent = s.emoji;
+  document.getElementById('story-text').textContent = s.text;
+  const bars = specialStories.map((_,i)=>{
+    if(i < storyIndex) return '<i class="done"></i>';
+    if(i === storyIndex) return '<i class="current"></i>';
+    return '<i></i>';
+  }).join('');
+  document.getElementById('story-progress').innerHTML = bars;
+}
+function nextStory(){
+  if(storyIndex < specialStories.length-1){ storyIndex++; paintStory(); }
+  else { closeStory(); }
+}
+function prevStory(){
+  if(storyIndex > 0){ storyIndex--; paintStory(); }
+}
+function closeStory(){ document.getElementById('story-modal').classList.remove('show'); }
+
+document.getElementById('story-close').addEventListener('click', closeStory);
+document.getElementById('story-tap-r').addEventListener('click', nextStory);
+document.getElementById('story-tap-l').addEventListener('click', prevStory);
+document.getElementById('story-modal').addEventListener('click', (e)=>{
+  if(e.target.id === 'story-modal') closeStory();
+});
+
+function initialsOf(){ return "CK"; }
+
+let feedPosts = [];
+function commentRowHtml(c){
+  return `
+    <div class="comment">
+      <div class="c-avatar">${c.name.slice(0,1).toUpperCase()}</div>
+      <div>
+        <b>${c.name}</b><br><span class="txt">${c.text}</span>
+        ${c.reply ? `
+          <div class="comment-reply">
+            <div class="c-avatar small">${c.reply.name.slice(0,1).toUpperCase()}</div>
+            <div><b>${c.reply.name}</b><br><span class="txt">${c.reply.text}</span></div>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+function renderPostComments(idx){
+  const p = feedPosts[idx];
+  const wrap = document.querySelector(`.post[data-idx="${idx}"] .comments`);
+  if(!wrap) return;
+  wrap.querySelector('.comments-list').innerHTML = p.comments.map(commentRowHtml).join('');
+  const countEl = document.querySelector(`.post[data-idx="${idx}"] .comment-toggle span:last-child`);
+  if(countEl) countEl.textContent = p.comments.length;
+}
+function postFeedComment(idx){
+  const input = document.querySelector(`.post[data-idx="${idx}"] .post-comment-input`);
+  const val = input.value.trim();
+  if(!val) return;
+  feedPosts[idx].comments.push({ name: 'You', text: escapeHtml(val) });
+  input.value = '';
+  renderPostComments(idx);
+}
+function postCardHtml(p, i){
+  return `
+    <article class="post" data-idx="${i}">
+      <div class="post-head">
+        <div class="avatar">CK</div>
+        <div class="post-body">
+          <div class="post-name-row">
+            <span class="post-name">Chirag Kothari</span>
+            <span class="badge">✓</span>
+            <span class="post-handle">${handle}</span>
+            <span class="post-dot">·</span>
+            <span class="post-time">${p.time}</span>
+          </div>
+          <div class="post-text">${p.text}</div>
+          <div class="post-actions">
+            <button class="like-btn" data-count="${p.likes}">
+              <span class="ic">🤍</span><span class="like-num">${p.likes}</span>
+            </button>
+            <button class="comment-toggle">
+              <span class="ic">💬</span><span>${p.comments.length}</span>
+            </button>
+            <button class="rt-btn">
+              <span class="ic">🔁</span><span>${p.rts}</span>
+            </button>
+          </div>
+          <div class="comments">
+            <div class="comments-list">${p.comments.map(commentRowHtml).join('')}</div>
+            <div class="post-comment-bar">
+              <input type="text" class="post-comment-input" placeholder="Add a comment..." autocomplete="off" />
+              <button class="post-comment-send">Post</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+function adCardHtml(ad){
+  return `
+    <article class="ad-card">
+      <div class="ad-head">
+        <div class="ad-icon">${ad.icon}</div>
+        <div class="ad-body">
+          <div class="ad-name-row">
+            <span class="ad-sponsor">${ad.sponsor}</span>
+            <span class="ad-tag">Sponsored</span>
+          </div>
+          <div class="ad-sub">Suggested for you</div>
+          <div class="ad-text">${ad.text}</div>
+          <button class="ad-cta">${ad.cta}</button>
+          <div class="ad-footer">
+            <span>🕉️ Sadhguru App</span>
+            <span>Why am I seeing this ad?</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+function renderFeed(){
+  feedPosts = buildPosts(112);
+  const posts = feedPosts;
+  const feed = document.getElementById('feed');
+
+  /* only some ads live in the home feed — the rest show up between reels */
+  const shuffledAds = shuffle(adPosts);
+  const feedAdCount = Math.ceil(shuffledAds.length / 2);
+  const ads = shuffledAds.slice(0, feedAdCount);
+  window.reelAdPool = shuffledAds.slice(feedAdCount);
+
+  const gap = Math.floor(posts.length / (ads.length + 1));
+  const adSlots = new Set();
+  ads.forEach((ad, k)=>{
+    let slot = gap * (k+1) + Math.floor(Math.random()*Math.min(6, gap)) - 3;
+    slot = Math.max(1, Math.min(posts.length-1, slot));
+    while(adSlots.has(slot)) slot++;
+    adSlots.add(slot);
+  });
+  const sortedSlots = [...adSlots].sort((a,b)=>a-b);
+
+  let html = '';
+  let adPtr = 0;
+  posts.forEach((p, i)=>{
+    if(sortedSlots[adPtr] === i && adPtr < ads.length){
+      html += adCardHtml(ads[adPtr]);
+      adPtr++;
+    }
+    html += postCardHtml(p, i);
+  });
+  feed.innerHTML = html;
+
+  feed.querySelectorAll('.like-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const liked = btn.classList.toggle('liked');
+      const numEl = btn.querySelector('.like-num');
+      const iconEl = btn.querySelector('.ic');
+      let count = parseInt(btn.dataset.count);
+      if(liked){ count += 1; iconEl.textContent = "❤️"; }
+      else { count -= 1; iconEl.textContent = "🤍"; }
+      btn.dataset.count = count;
+      numEl.textContent = count;
+    });
+  });
+  feed.querySelectorAll('.comment-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const comments = btn.closest('.post-body').querySelector('.comments');
+      comments.classList.toggle('show');
+    });
+  });
+  feed.querySelectorAll('.post-comment-send').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = parseInt(btn.closest('.post').dataset.idx);
+      postFeedComment(idx);
+    });
+  });
+  feed.querySelectorAll('.post-comment-input').forEach(inp=>{
+    inp.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        const idx = parseInt(inp.closest('.post').dataset.idx);
+        postFeedComment(idx);
+      }
+    });
+  });
+  feed.querySelectorAll('.ad-cta').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const original = btn.textContent;
+      btn.textContent = "Opened ✓";
+      setTimeout(()=>{ btn.textContent = original; }, 1600);
+    });
+  });
+}
+
+function adReelCardHtml(ad, gradient){
+  return `
+    <div class="reel-card ad-reel-card" style="background:${gradient}" data-kind="ad">
+      <div class="ad-reel-badge">Sponsored</div>
+      <div class="ad-reel-panel">
+        <div class="ad-reel-icon">${ad.icon}</div>
+        <div class="ad-reel-sponsor">${ad.sponsor}</div>
+        <div class="ad-reel-text">${ad.text}</div>
+        <button class="ad-reel-cta">${ad.cta}</button>
+      </div>
+      <div class="ad-reel-footer">
+        <span>🕉️ Sadhguru App</span>
+        <span>Why am I seeing this ad?</span>
+      </div>
+    </div>
+  `;
+}
+function renderReels(){
+  buildReelComments();
+  const scroll = document.getElementById('reels-scroll');
+
+  /* interleave a few ads randomly between real reels, never as the very first card */
+  const ads = (window.reelAdPool && window.reelAdPool.length) ? shuffle(window.reelAdPool) : shuffle(adPosts).slice(0,3);
+  const items = reelConvos.map((convo, idx)=> ({ type:'reel', idx, convo }));
+  ads.forEach(ad=>{
+    let pos = 1 + Math.floor(Math.random()*items.length); // never index 0
+    items.splice(pos, 0, { type:'ad', ad });
+  });
+
+  const html = items.map((item, i)=>{
+    const gradient = REEL_GRADIENTS[i % REEL_GRADIENTS.length];
+    if(item.type === 'ad'){
+      return adReelCardHtml(item.ad, gradient);
+    }
+    const idx = item.idx;
+    const likes = 60 + Math.floor(Math.random()*400);
+    const shares = 3 + Math.floor(Math.random()*40);
+    const comments = reelCommentsStore[idx];
+    const bubbles = item.convo.map(([who,text])=> `<div class="reel-bubble ${who}">${text}</div>`).join('');
+    return `
+      <div class="reel-card" style="background:${gradient}" data-idx="${idx}" data-kind="reel">
+        <div class="reel-tag">chirag x chetna 💗</div>
+        <div class="reel-convo">${bubbles}</div>
+        <div class="reel-caption">an imaginary lil convo, but honestly sounds about right</div>
+        <div class="reel-actions">
+          <button class="reel-like" data-count="${likes}"><span class="ic">🤍</span><span class="rl-num">${likes}</span></button>
+          <button class="reel-comment-btn" data-idx="${idx}"><span class="ic">💬</span><span>${comments.length}</span></button>
+          <button class="reel-share"><span class="ic">↗️</span><span>${shares}</span></button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  scroll.innerHTML = html;
+
+  scroll.querySelectorAll('.reel-like').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const liked = btn.classList.toggle('liked');
+      const numEl = btn.querySelector('.rl-num');
+      const iconEl = btn.querySelector('.ic');
+      let count = parseInt(btn.dataset.count);
+      if(liked){ count += 1; iconEl.textContent = "❤️"; }
+      else { count -= 1; iconEl.textContent = "🤍"; }
+      btn.dataset.count = count;
+      numEl.textContent = count;
+    });
+  });
+  scroll.querySelectorAll('.reel-comment-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> openReelComments(parseInt(btn.dataset.idx)));
+  });
+  scroll.querySelectorAll('.ad-reel-cta').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const original = btn.textContent;
+      btn.textContent = "Opened ✓";
+      setTimeout(()=>{ btn.textContent = original; }, 1600);
+    });
+  });
+}
+
+const reelCommentsStore = [];
+function buildReelComments(){
+  reelCommentsStore.length = 0;
+  reelConvos.forEach((_, ri)=>{
+    const nComments = 4 + Math.floor(Math.random()*4);
+    const comments = [];
+    const usedNames = new Set();
+    const usedTexts = new Set();
+    for(let c=0;c<nComments;c++){
+      let bn = pick(botNames);
+      let tries=0;
+      while(usedNames.has(bn) && tries<6){ bn = pick(botNames); tries++; }
+      usedNames.add(bn);
+      let ct = nextComment();
+      let ctries=0;
+      while(usedTexts.has(ct) && ctries<4){ ct = nextComment(); ctries++; }
+      usedTexts.add(ct);
+      const entry = { name: bn, text: ct };
+      if(Math.random() < 0.8){
+        entry.reply = { name: "Chirag", text: nextGenericReply() };
+      }
+      comments.push(entry);
+    }
+    if(ri % 3 === 1){
+      const nc = nextNamedComment();
+      const namedEntry = { name: nc.name, text: nc.text, avatarClass: nc.avatarClass, initials: nc.initials };
+      if(Math.random() < 0.8){
+        namedEntry.reply = { name: "Chirag", text: nc.reply };
+      }
+      comments.push(namedEntry);
+    }
+    reelCommentsStore.push(comments);
+  });
+}
+
+let activeReelIdx = null;
+function renderReelCommentsList(idx){
+  const list = document.getElementById('reel-comments-list');
+  const comments = reelCommentsStore[idx] || [];
+  list.innerHTML = comments.map(commentRowHtml).join('');
+  list.scrollTop = list.scrollHeight;
+}
+function openReelComments(idx){
+  activeReelIdx = idx;
+  renderReelCommentsList(idx);
+  document.getElementById('reel-comments-modal').classList.add('show');
+}
+document.getElementById('reel-comments-close').addEventListener('click', ()=>{
+  document.getElementById('reel-comments-modal').classList.remove('show');
+});
+document.getElementById('reel-comments-modal').addEventListener('click', (e)=>{
+  if(e.target.id === 'reel-comments-modal') e.currentTarget.classList.remove('show');
+});
+function postReelComment(){
+  if(activeReelIdx === null) return;
+  const input = document.getElementById('reel-comment-input');
+  const val = input.value.trim();
+  if(!val) return;
+  reelCommentsStore[activeReelIdx].push({ name: 'You', text: escapeHtml(val) });
+  input.value = '';
+  renderReelCommentsList(activeReelIdx);
+  const countEl = document.querySelector(`.reel-comment-btn[data-idx="${activeReelIdx}"] span:last-child`);
+  if(countEl) countEl.textContent = reelCommentsStore[activeReelIdx].length;
+}
+document.getElementById('reel-comment-send').addEventListener('click', postReelComment);
+document.getElementById('reel-comment-input').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){ e.preventDefault(); postReelComment(); }
+});
+
+function renderMessages(convoId){
+  const c = conversations[convoId];
+  const msgs = c.getMessages();
+  const list = document.getElementById('msg-list');
+  let lastDay = null;
+  let html = '';
+  msgs.forEach((m, i)=>{
+    if(m.day !== lastDay){
+      html += `<div class="dm-day"><span>Day ${m.day}</span></div>`;
+      lastDay = m.day;
+    }
+    const prev = msgs[i-1];
+    const isGrouped = prev && prev.day === m.day; // hide repeated avatar within same day run
+    const next = msgs[i+1];
+    const isLastOfRun = !(next && next.day === m.day && (i+1) % 4 !== 0); // show timestamp periodically
+    html += `
+      <div class="dm-row ${isGrouped ? 'grouped' : ''}">
+        <div class="dm-avatar-slot"><div class="av ${c.avatarClass}">${c.initials}</div></div>
+        <div class="msg-bubble">${m.text}</div>
+      </div>
+    `;
+    if(isLastOfRun){
+      html += `<div class="dm-timestamp">${m.time}</div>`;
+    }
+  });
+  list.innerHTML = html;
+}
+
+/* ============================================================
+   LOGIN / MULTI-PROFILE AUTH FLOW (Firebase-backed)
+   Usernames map to a fake internal email (username@chetnaverse.local)
+   so we can use Firebase's normal email/password auth while still
+   showing people a simple "username + passkey" experience.
+   A "usernames/{username}" doc in Firestore reserves the name and
+   points at that account's real internal email + display name.
+   ============================================================ */
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function usernameToEmail(username){
+  return username + '@chetnaverse.local';
+}
+
+const authChoice = document.getElementById('auth-choice');
+const signinForm = document.getElementById('signin-form');
+const createForm = document.getElementById('create-form');
+const loginReveal = document.getElementById('login-reveal');
+let currentUsername = null;
+
+function showAuthScreen(which){
+  authChoice.style.display = which === 'choice' ? 'flex' : 'none';
+  signinForm.classList.toggle('show', which === 'signin');
+  createForm.classList.toggle('show', which === 'create');
+  document.getElementById('signin-error').textContent = '';
+  document.getElementById('create-error').textContent = '';
+}
+
+document.getElementById('show-signin-btn').addEventListener('click', ()=> showAuthScreen('signin'));
+document.getElementById('show-create-btn').addEventListener('click', ()=> showAuthScreen('create'));
+document.getElementById('signin-back-btn').addEventListener('click', ()=> showAuthScreen('choice'));
+document.getElementById('create-back-btn').addEventListener('click', ()=> showAuthScreen('choice'));
+
+function revealAndEnter(displayName){
+  const text = document.getElementById('reveal-text');
+  const lower = displayName.toLowerCase();
+  if(lower.includes('chetna')){
+    text.innerHTML = "Oh, aap <b>Chetna ji</b> hai? Chirag sir ki pyariiii????? Aaap toh aise hi andar aa jaiye 🌷";
+  } else {
+    text.innerHTML = `Welcome back, <b>${escapeHtml(displayName)}</b> — chaliye, dikha dete hai aapko bhi 🌷`;
+  }
+  authChoice.style.display = 'none';
+  signinForm.classList.remove('show');
+  createForm.classList.remove('show');
+  loginReveal.classList.add('show');
+}
+
+async function handleSignin(){
+  const usernameRaw = (document.getElementById('signin-username').value || '').trim();
+  const passkey = document.getElementById('signin-passkey').value || '';
+  const errEl = document.getElementById('signin-error');
+  const username = usernameRaw.toLowerCase();
+  if(!username || !passkey){
+    errEl.textContent = 'Please enter both a username and a passkey.';
+    return;
+  }
+  errEl.textContent = 'Signing in...';
+  try{
+    const snap = await db.collection('usernames').doc(username).get();
+    if(!snap.exists){
+      errEl.textContent = 'Username or passkey is incorrect.';
+      return;
+    }
+    const data = snap.data();
+    await auth.signInWithEmailAndPassword(data.email, passkey);
+    currentUsername = username;
+    errEl.textContent = '';
+    revealAndEnter(data.displayName);
+  } catch(e){
+    errEl.textContent = 'Username or passkey is incorrect.';
+  }
+}
+
+async function handleCreate(){
+  const usernameRaw = (document.getElementById('create-username').value || '').trim();
+  const passkey = document.getElementById('create-passkey').value || '';
+  const errEl = document.getElementById('create-error');
+  const username = usernameRaw.toLowerCase();
+  if(!usernameRaw || !passkey){
+    errEl.textContent = 'Please choose both a username and a passkey.';
+    return;
+  }
+  if(passkey.length < 6){
+    errEl.textContent = 'Passkey should be at least 6 characters (Firebase requires this).';
+    return;
+  }
+  if(!/^[a-z0-9_.]+$/.test(username)){
+    errEl.textContent = 'Username can only use letters, numbers, "_" and "."';
+    return;
+  }
+  errEl.textContent = 'Creating your profile...';
+  try{
+    const existing = await db.collection('usernames').doc(username).get();
+    if(existing.exists){
+      errEl.textContent = 'That username is already taken — try another, or sign in instead.';
+      return;
+    }
+    const email = usernameToEmail(username);
+    const cred = await auth.createUserWithEmailAndPassword(email, passkey);
+    await db.collection('usernames').doc(username).set({
+      email: email,
+      displayName: usernameRaw,
+      uid: cred.user.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    currentUsername = username;
+    errEl.textContent = '';
+    revealAndEnter(usernameRaw);
+  } catch(e){
+    errEl.textContent = e.message.includes('email-already-in-use')
+      ? 'That username is already taken — try another.'
+      : ('Something went wrong: ' + e.message);
+  }
+}
+
+document.getElementById('signin-btn').addEventListener('click', handleSignin);
+document.getElementById('create-btn').addEventListener('click', handleCreate);
+['signin-username','signin-passkey'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown', (e)=>{ if(e.key === 'Enter') handleSignin(); });
+});
+['create-username','create-passkey'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown', (e)=>{ if(e.key === 'Enter') handleCreate(); });
+});
+
+document.getElementById('enter-btn').addEventListener('click', ()=>{
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').classList.add('show');
+  updateHeaderHeight();
+  updateKeyboardOffset();
+  initCommunityFeatures();
+});
+
+// Start on the sign-in screen by default (Create a profile is one tap away)
+showAuthScreen('choice');
+
+/* ============================================================
+   COMMUNITY: real posts + public chat shared by every account
+   (Firestore-backed, live-updating via onSnapshot)
+   ============================================================ */
+let communityInited = false;
+function initCommunityFeatures(){
+  if(communityInited) return;
+  communityInited = true;
+
+  // Live post feed
+  db.collection('posts').orderBy('createdAt', 'desc').limit(100)
+    .onSnapshot(snapshot => {
+      const feed = document.getElementById('community-feed');
+      if(!feed) return;
+      feed.innerHTML = snapshot.docs.map(doc=>{
+        const p = doc.data();
+        const when = p.createdAt && p.createdAt.toDate ? p.createdAt.toDate().toLocaleString() : 'just now';
+        return `
+          <div class="community-post">
+            <div class="cp-author">${escapeHtml(p.author || 'someone')}</div>
+            <div class="cp-text">${escapeHtml(p.text || '')}</div>
+            <div class="cp-time">${when}</div>
+          </div>`;
+      }).join('') || `<div class="cp-time" style="text-align:center;padding:20px;">No posts yet — be the first 🌷</div>`;
+    }, err => console.error('posts listener error', err));
+
+  document.getElementById('community-post-btn').addEventListener('click', async ()=>{
+    const input = document.getElementById('community-post-input');
+    const text = input.value.trim();
+    if(!text || !auth.currentUser) return;
+    input.disabled = true;
+    try{
+      await db.collection('posts').add({
+        text: text,
+        author: currentUsername || auth.currentUser.email,
+        uid: auth.currentUser.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      input.value = '';
+    } catch(e){ alert('Could not post: ' + e.message); }
+    input.disabled = false;
+  });
+
+  // Live public chat
+  db.collection('community_chat').orderBy('createdAt', 'desc').limit(200)
+    .onSnapshot(snapshot => {
+      const list = document.getElementById('community-chat-list');
+      if(!list) return;
+      const msgs = snapshot.docs.map(d=>d.data()).reverse();
+      list.innerHTML = msgs.map(m=>{
+        const mine = auth.currentUser && m.uid === auth.currentUser.uid;
+        return `
+          <div class="dm-row ${mine ? 'sent' : ''}">
+            ${mine ? '' : `<div class="dm-avatar-slot"><div class="av">${escapeHtml((m.author||'?').slice(0,2).toUpperCase())}</div></div>`}
+            <div class="msg-bubble ${mine ? 'sent' : ''}">${mine ? '' : `<b>${escapeHtml(m.author||'')}: </b>`}${escapeHtml(m.text||'')}</div>
+          </div>`;
+      }).join('');
+      list.scrollTop = list.scrollHeight;
+    }, err => console.error('chat listener error', err));
+
+  function sendCommunityChat(){
+    const input = document.getElementById('community-chat-input');
+    const text = input.value.trim();
+    if(!text || !auth.currentUser) return;
+    input.value = '';
+    db.collection('community_chat').add({
+      text: text,
+      author: currentUsername || auth.currentUser.email,
+      uid: auth.currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(e=> alert('Could not send: ' + e.message));
+  }
+  document.getElementById('community-chat-send-btn').addEventListener('click', sendCommunityChat);
+  document.getElementById('community-chat-input').addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); sendCommunityChat(); }
+  });
+}
+
+/* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+function showInbox(){
+  document.getElementById('dm-inbox').classList.add('show');
+  document.getElementById('dm-thread-view').classList.remove('show');
+  document.getElementById('main-header').classList.remove('hide');
+  document.getElementById('chat-header').classList.remove('show');
+  document.body.classList.remove('dm-open');
+}
+function showThread(convoId){
+  activeConvo = convoId;
+  const c = conversations[convoId];
+  document.querySelector('.chat-header-name').textContent = c.name;
+  document.querySelector('.chat-header-status').textContent = c.status;
+  const avatarEl = document.querySelector('.chat-header-avatar');
+  avatarEl.classList.remove('alt','friend','junior','devi','sadhguru','senior');
+  if(c.avatarClass) avatarEl.classList.add(c.avatarClass);
+  avatarEl.querySelector('.status-dot').classList.toggle('offline', !c.online);
+  avatarEl.childNodes[0].textContent = c.initials;
+  renderMessages(convoId);
+  document.getElementById('dm-inbox').classList.remove('show');
+  document.getElementById('dm-thread-view').classList.add('show');
+  document.getElementById('main-header').classList.add('hide');
+  document.getElementById('chat-header').classList.add('show');
+  document.body.classList.add('dm-open');
+  updateHeaderHeight();
+  updateKeyboardOffset();
+  window.scrollTo({top:0, behavior:'instant'});
+  const list = document.getElementById('msg-list');
+  requestAnimationFrame(()=>{ list.scrollTop = list.scrollHeight; });
+}
+document.getElementById('chat-back').addEventListener('click', showInbox);
+
+/* ---------- SEND MESSAGE (live, in-thread only) ---------- */
+function currentTimeLabel(){
+  const now = new Date();
+  let h = now.getHours();
+  const m = now.getMinutes();
+  const ampm = h < 12 ? "AM" : "PM";
+  h = ((h+11)%12)+1;
+  return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+function sendDmMessage(){
+  const input = document.getElementById('dm-input');
+  const val = input.value.trim();
+  if(!val) return;
+  const list = document.getElementById('msg-list');
+  const time = currentTimeLabel();
+
+  list.insertAdjacentHTML('beforeend', `
+    <div class="dm-row sent">
+      <div class="msg-bubble sent">${escapeHtml(val)}</div>
+    </div>
+    <div class="dm-timestamp" style="text-align:right; margin-left:0; margin-right:4px;">${time}</div>
+  `);
+  input.value = '';
+  input.focus();
+  list.scrollTop = list.scrollHeight;
+
+  const c = conversations[activeConvo];
+  if(c && c.autoReplySpam && c.autoReplySpam.length){
+    let delay = 700;
+    c.autoReplySpam.forEach((msg, i)=>{
+      delay += 550 + Math.random()*450;
+      setTimeout(()=>{
+        const typingId = 'typing-' + Date.now() + '-' + i;
+        list.insertAdjacentHTML('beforeend', `<div class="dm-typing" id="${typingId}">typing…</div>`);
+        list.scrollTop = list.scrollHeight;
+        setTimeout(()=>{
+          const typingEl = document.getElementById(typingId);
+          if(typingEl) typingEl.remove();
+          list.insertAdjacentHTML('beforeend', `
+            <div class="dm-row">
+              <div class="dm-avatar-slot"><div class="av ${c.avatarClass}">${c.initials}</div></div>
+              <div class="msg-bubble">${msg}</div>
+            </div>
+            <div class="dm-timestamp">${currentTimeLabel()}</div>
+          `);
+          list.scrollTop = list.scrollHeight;
+        }, 500 + Math.random()*400);
+      }, delay);
+    });
+  } else if(c && c.autoReply){
+    const typingId = 'typing-' + Date.now();
+    list.insertAdjacentHTML('beforeend', `<div class="dm-typing" id="${typingId}">typing…</div>`);
+    list.scrollTop = list.scrollHeight;
+    setTimeout(()=>{
+      const typingEl = document.getElementById(typingId);
+      if(typingEl) typingEl.remove();
+      list.insertAdjacentHTML('beforeend', `
+        <div class="dm-row">
+          <div class="dm-avatar-slot"><div class="av ${c.avatarClass}">${c.initials}</div></div>
+          <div class="msg-bubble">${c.autoReply}</div>
+        </div>
+        <div class="dm-timestamp">${currentTimeLabel()}</div>
+      `);
+      list.scrollTop = list.scrollHeight;
+    }, 900 + Math.random()*500);
+  }
+}
+document.getElementById('dm-send-btn').addEventListener('click', sendDmMessage);
+document.getElementById('dm-input').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){ e.preventDefault(); sendDmMessage(); }
+});
+document.getElementById('dm-input').addEventListener('focus', ()=>{
+  document.body.classList.add('kb-active');
+  requestAnimationFrame(updateKeyboardOffset);
+  setTimeout(()=>{
+    const list = document.getElementById('msg-list');
+    list.scrollTop = list.scrollHeight;
+  }, 60);
+});
+document.getElementById('dm-input').addEventListener('blur', ()=>{
+  document.body.classList.remove('kb-active');
+  setTimeout(updateKeyboardOffset, 50);
+});
+
+/* ---------- keyboard-aware layout (fixes the chat header jumping / send
+   button hiding behind the on-screen keyboard on mobile) ---------- */
+function updateHeaderHeight(){
+  const header = document.querySelector('header.topbar');
+  if(header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+}
+function updateKeyboardOffset(){
+  const navBar = document.getElementById('bottombar');
+  const navH = navBar ? navBar.offsetHeight : 64;
+  let kbOffset = navH;
+  if(document.body.classList.contains('kb-active') && window.visualViewport){
+    const vv = window.visualViewport;
+    const overlap = window.innerHeight - vv.height - vv.offsetTop;
+    kbOffset = Math.max(navH, overlap);
+  }
+  document.documentElement.style.setProperty('--kb-offset', kbOffset + 'px');
+  const list = document.getElementById('msg-list');
+  if(list && document.getElementById('dm-thread-view').classList.contains('show')){
+    list.scrollTop = list.scrollHeight;
+  }
+}
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', updateKeyboardOffset);
+  window.visualViewport.addEventListener('scroll', updateKeyboardOffset);
+}
+window.addEventListener('resize', updateHeaderHeight);
+updateHeaderHeight();
+updateKeyboardOffset();
+
+function setView(view){
+  document.getElementById('home-view').classList.toggle('show', view==='home');
+  document.getElementById('messages-view').classList.toggle('show', view==='messages');
+  document.getElementById('reels-view').classList.toggle('show', view==='reels');
+  document.getElementById('profile-view').classList.toggle('show', view==='profile');
+  document.getElementById('community-view').classList.toggle('show', view==='community');
+  document.querySelectorAll('.tab-btn').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
+  document.querySelectorAll('.nav-btn').forEach(b=> b.classList.toggle('active', b.dataset.view===view));
+  if(view === 'messages'){ showInbox(); }
+  else { document.getElementById('main-header').classList.remove('hide'); document.getElementById('chat-header').classList.remove('show'); }
+  if(view === 'reels' && typeof fitReelsHeight === 'function'){ fitReelsHeight(); }
+  if(view === 'profile'){ renderProfile(); }
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+/* ---------- PROFILE: Conscious Chetna ---------- */
+const followersList = [
+  { name: "Chirag Kothari", initials: "CK", avatarClass: "" },
+  { name: "Tarot Healer ✨", initials: "TH", avatarClass: "alt" },
+  { name: "Aryan · Chirag's friend", initials: "AK", avatarClass: "friend" },
+  { name: "Yash · Chirag's junior", initials: "YB", avatarClass: "junior" },
+  { name: "Devi 🥹", initials: "D", avatarClass: "devi" },
+  { name: "Sadhguru", initials: "SG", avatarClass: "sadhguru" },
+  { name: "Chirag ke Senior Sir", initials: "S", avatarClass: "senior" }
+];
+const followingList = [
+  { name: "Sadhguru", initials: "SG", avatarClass: "sadhguru" },
+  { name: "Devi 🥹", initials: "D", avatarClass: "devi" },
+  { name: "Chirag Kothari", initials: "CK", avatarClass: "" }
+];
+const chetnaPosts = [
+  { emoji: "🌷", text: "grateful for soft mornings and softer people" },
+  { emoji: "🕊️", text: "choosing peace over overthinking today" },
+  { emoji: "✨", text: "consciousness check: still choosing love" },
+  { emoji: "🥹", text: "someone's been extra sweet to me lately.." },
+  { emoji: "🌸", text: "journaling my way to a calmer heart" },
+  { emoji: "🍵", text: "chai, silence, and good vibes only" }
+];
+
+function personRowHtml(p){
+  return `
+    <div class="comment">
+      <div class="dm-conv-avatar ${p.avatarClass}" style="width:36px;height:36px;font-size:12px;flex:0 0 auto;">${p.initials}</div>
+      <div><b>${p.name}</b></div>
+    </div>
+  `;
+}
+function openPeopleModal(kind){
+  const isFollowers = kind === 'followers';
+  document.getElementById('people-modal-title').textContent = isFollowers ? 'Followers' : 'Following';
+  document.getElementById('people-list').innerHTML = (isFollowers ? followersList : followingList).map(personRowHtml).join('');
+  document.getElementById('people-modal').classList.add('show');
+}
+document.getElementById('stat-followers').addEventListener('click', ()=> openPeopleModal('followers'));
+document.getElementById('stat-following').addEventListener('click', ()=> openPeopleModal('following'));
+document.getElementById('people-modal-close').addEventListener('click', ()=> document.getElementById('people-modal').classList.remove('show'));
+document.getElementById('people-modal').addEventListener('click', (e)=>{
+  if(e.target.id === 'people-modal') e.currentTarget.classList.remove('show');
+});
+document.getElementById('post-detail-close').addEventListener('click', ()=> document.getElementById('post-detail-modal').classList.remove('show'));
+document.getElementById('post-detail-modal').addEventListener('click', (e)=>{
+  if(e.target.id === 'post-detail-modal') e.currentTarget.classList.remove('show');
+});
+function renderProfile(){
+  document.getElementById('posts-count').textContent = chetnaPosts.length;
+  document.getElementById('followers-count').textContent = followersList.length;
+  document.getElementById('following-count').textContent = followingList.length;
+  const grid = document.getElementById('profile-grid');
+  grid.innerHTML = chetnaPosts.map((p, i)=>`
+    <div class="profile-grid-item" data-idx="${i}">
+      <div>
+        <div style="font-size:26px;">${p.emoji}</div>
+        <div style="margin-top:4px;">${p.text}</div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.profile-grid-item').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const p = chetnaPosts[el.dataset.idx];
+      document.getElementById('post-detail-body').innerHTML = `
+        <div style="text-align:center; padding:10px 0;">
+          <div style="font-size:44px;">${p.emoji}</div>
+          <div style="margin-top:10px; font-weight:700;">Conscious Chetna</div>
+          <div style="margin-top:6px; color:var(--ink-soft); font-size:14px;">${p.text}</div>
+        </div>
+      `;
+      document.getElementById('post-detail-modal').classList.add('show');
+    });
+  });
+}
+document.querySelectorAll('.tab-btn, .nav-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> setView(btn.dataset.view));
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderStories();
+renderFeed();
+renderReels();
+renderConversationList();
+
+function fitReelsHeight(){
+  const header = document.querySelector('header.topbar');
+  const bottombar = document.getElementById('bottombar');
+  const headerH = header ? header.offsetHeight : 60;
+  const navH = bottombar ? bottombar.offsetHeight : 60;
+  document.documentElement.style.setProperty('--reels-h', `${window.innerHeight - headerH - navH}px`);
+}
+window.addEventListener('resize', fitReelsHeight);
+window.addEventListener('orientationchange', fitReelsHeight);
+fitReelsHeight();
+</script>
+</body>
+</html>
