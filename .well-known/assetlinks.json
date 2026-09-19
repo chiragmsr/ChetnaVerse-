@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.github.chiragmsr.twa",
+    "sha256_cert_fingerprints": ["87:27:94:1A:C0:C3:B3:55:DC:1E:DD:42:D9:1E:3E:11:15:14:47:E7:E8:71:D2:11:35:EF:16:E0:2B:30:70:B8"]
+  }
+}]
